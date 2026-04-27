@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TÁNAMÃO – Profissionais e Serviços</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:#f0f2f5;color:#1a1a1a;max-width:480px;margin:0 auto;padding-bottom:80px;}
+
+/* ═══════════════════════════════
+   TOPO FIXO
+═══════════════════════════════ */
+.app-header{
+  background:#FFD700;
+  padding:12px 12px 10px;
+  padding-right:12px;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 10px rgba(0,0,0,0.12);
+}
+.header-row1{
+  display:flex;align-items:center;gap:8px;margin-bottom:10px;min-width:0;
+}
+/* Avatar do usuário */
+.user-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:#1a1a1a;color:#FFD700;font-size:14px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #fff;flex-shrink:0;cursor:pointer;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+/* Campo de busca */
+.search-wrap{
+  flex:1;display:flex;align-items:center;min-width:0;
+  background:#fff;border-radius:22px;
+  padding:9px 14px;gap:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+}
+.search-wrap i{color:#bbb;font-size:14px;}
+.search-wrap input{
+  flex:1;border:none;outline:none;min-width:0;
+  font-family:'Poppins',sans-serif;font-size:13px;background:transparent;color:#1a1a1a;
+}
+/* Sino */
+.bell-wrap{position:relative;flex-shrink:0;}
+.bell-btn{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(0,0,0,0.12);border:none;
+  color:#1a1a1a;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.notif-badge{
+  position:absolute;top:-2px;right:-2px;
+  background:#e63946;color:#fff;
+  border-radius:50%;min-width:18px;height:18px;
+  font-size:10px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #FFD700;padding:0 3px;
+}
+
+/* LOCALIZAÇÃO */
+.location-strip{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;background:#fff;
+  border-bottom:1px solid #f0f0f0;cursor:pointer;
+}
+.location-strip i{color:#e63946;font-size:13px;}
+.location-strip span{font-size:12px;font-weight:700;color:#1a1a1a;flex:1;}
+.location-strip .chevron{color:#bbb;font-size:12px;}
+
+/* ═══════════════════════════════
+   FILTRO CATEGORIAS (horizontal)
+═══════════════════════════════ */
+.filter-scroll{
+  display:flex;gap:8px;
+  padding:10px 14px;overflow-x:auto;background:#fff;
+  border-bottom:2px solid #f0f0f0;
+}
+.filter-scroll::-webkit-scrollbar{display:none;}
+.f-chip{
+  white-space:nowrap;border:none;
+  background:#f5f5f5;border-radius:20px;
+  padding:7px 16px;font-family:'Poppins',sans-serif;
+  font-size:12px;font-weight:700;color:#555;cursor:pointer;
+  flex-shrink:0;transition:all 0.15s;
+}
+.f-chip.active{background:#1a1a1a;color:#FFD700;}
+.f-chip:active{transform:scale(0.96);}
+
+/* ═══════════════════════════════
+   BANNER PUBLICITÁRIO
+═══════════════════════════════ */
+.banner-wrap{padding:12px 14px 0;}
+.ad-banner{
+  background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);
+  border-radius:16px;padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  overflow:hidden;position:relative;cursor:pointer;
+}
+.ad-banner::before{
+  content:'';position:absolute;
+  right:-30px;top:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(255,215,0,0.08);
+}
+.ad-banner::after{
+  content:'';position:absolute;
+  right:20px;bottom:-40px;
+  width:90px;height:90px;border-radius:50%;
+  background:rgba(255,215,0,0.05);
+}
+.ad-text .ad-tag{
+  font-size:9px;font-weight:700;letter-spacing:1px;
+  color:#e6b800;text-transform:uppercase;margin-bottom:4px;
+}
+.ad-text .ad-title{
+  font-size:16px;font-weight:800;color:#fff;line-height:1.25;margin-bottom:6px;
+}
+.ad-text .ad-title span{color:#FFD700;}
+.ad-text .ad-sub{font-size:11px;color:#aaa;margin-bottom:10px;}
+.btn-ad{
+  background:#FFD700;color:#1a1a1a;border:none;
+  border-radius:20px;padding:7px 16px;
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:800;cursor:pointer;
+}
+
+/* ═══════════════════════════════
+   ÍCONES DE CATEGORIAS
+═══════════════════════════════ */
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 14px 8px;
+}
+.section-header h2{font-size:15px;font-weight:800;}
+.section-header a{font-size:12px;font-weight:700;color:#0077b6;text-decoration:none;}
+
+.cat-icons-wrap{
+  display:flex;gap:0;
+  padding:0 6px 4px;overflow-x:auto;
+}
+.cat-icons-wrap::-webkit-scrollbar{display:none;}
+.cat-icon-item{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:8px 10px;cursor:pointer;flex-shrink:0;min-width:72px;
+}
+.cat-icon-item:active .cat-icon-circle{transform:scale(0.92);}
+.cat-icon-circle{
+  width:54px;height:54px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;transition:transform 0.15s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+.cat-icon-label{font-size:10px;font-weight:700;color:#444;text-align:center;line-height:1.2;}
+
+/* ═══════════════════════════════
+   DESTAQUES — SCROLL HORIZONTAL
+═══════════════════════════════ */
+.highlight-wrap{
+  display:flex;gap:12px;
+  padding:4px 14px 8px;overflow-x:auto;
+}
+.highlight-wrap::-webkit-scrollbar{display:none;}
+
+.hl-card{
+  min-width:200px;max-width:200px;
+  background:#fff;border-radius:18px;
+  overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,0.1);
+  cursor:pointer;flex-shrink:0;position:relative;
+  transition:transform 0.15s;
+}
+.hl-card:active{transform:scale(0.97);}
+.hl-cover{
+  height:90px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-size:36px;
+}
+.hl-avatar{
+  position:absolute;bottom:-18px;left:12px;
+  width:46px;height:46px;border-radius:50%;
+  background:#FFD700;color:#1a1a1a;font-size:14px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:3px solid #fff;z-index:2;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+.hl-plan-tag{
+  position:absolute;top:8px;right:8px;
+  background:#FFD700;color:#1a1a1a;
+  font-size:9px;font-weight:800;
+  padding:2px 8px;border-radius:20px;
+}
+.hl-plan-tag.pro{background:#0077b6;color:#fff;}
+.hl-body{padding:26px 12px 12px;}
+.hl-name{font-size:13px;font-weight:800;margin-bottom:1px;}
+.hl-role{font-size:11px;color:#888;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hl-stars{font-size:11px;color:#FFD700;}
+.hl-stars span{color:#aaa;font-size:10px;}
+.hl-dist{font-size:10px;color:#25a244;font-weight:700;margin-top:3px;}
+.hl-dist i{font-size:9px;}
+.verified-tag{
+  font-size:9px;color:#25a244;font-weight:800;
+  display:flex;align-items:center;gap:3px;margin-top:2px;
+}
+
+/* ═══════════════════════════════
+   LISTA VERTICAL — sem destaque
+═══════════════════════════════ */
+.list-section{padding:0 14px;}
+.list-card{
+  background:#fff;border-radius:16px;margin-bottom:10px;
+  overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.07);
+  cursor:pointer;display:flex;align-items:stretch;
+  transition:transform 0.15s;
+}
+.list-card:active{transform:scale(0.98);}
+.list-cover-side{
+  width:90px;min-height:90px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:34px;position:relative;
+}
+.list-avatar-sm{
+  position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  width:34px;height:34px;border-radius:50%;
+  background:#FFD700;color:#1a1a1a;font-size:10px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #fff;
+  box-shadow:0 1px 4px rgba(0,0,0,0.2);
+}
+.list-info{flex:1;padding:12px 12px 10px;}
+.list-header{display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+.list-name{font-size:13px;font-weight:800;}
+.list-role{font-size:11px;color:#888;margin-bottom:4px;}
+.list-stars{font-size:11px;color:#FFD700;}
+.list-stars span{color:#bbb;font-size:10px;}
+.list-meta{display:flex;align-items:center;gap:10px;margin-top:5px;flex-wrap:wrap;}
+.list-dist{font-size:10px;color:#25a244;font-weight:700;}
+.list-city{font-size:10px;color:#aaa;}
+.list-contact-row{display:flex;gap:6px;margin-top:8px;}
+.lc-btn{
+  width:30px;height:30px;border-radius:50%;border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;color:#fff;
+}
+
+/* ═══════════════════════════════
+   NOTIF DRAWER
+═══════════════════════════════ */
+.notif-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:none;}
+.notif-overlay.open{display:block;}
+.notif-drawer{
+  position:fixed;top:0;right:0;width:300px;max-width:100vw;height:100vh;
+  background:#fff;z-index:201;
+  transform:translateX(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
+.notif-drawer.open{transform:translateX(0);}
+.notif-head{background:#FFD700;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.notif-head h2{font-size:16px;font-weight:800;}
+.notif-close{background:none;border:none;font-size:20px;cursor:pointer;}
+.notif-list{flex:1;overflow-y:auto;}
+.notif-item{
+  display:flex;gap:12px;padding:14px 16px;
+  border-bottom:1px solid #f5f5f5;cursor:pointer;
+}
+.notif-item.unread{background:#fffde7;}
+.notif-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.notif-body p{font-size:12px;color:#1a1a1a;line-height:1.5;margin-bottom:2px;}
+.notif-body span{font-size:10px;color:#aaa;}
+.unread-dot{width:8px;height:8px;border-radius:50%;background:#e63946;flex-shrink:0;margin-top:4px;}
+.mark-all-btn{padding:12px;border:none;background:#fff;border-top:1px solid #eee;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:#0077b6;cursor:pointer;width:100%;}
+
+/* MODAL LOCALIZAÇÃO */
+.loc-modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:none;align-items:flex-end;}
+.loc-modal.open{display:flex;}
+.loc-modal-card{background:#fff;border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;}
+.loc-modal-card h2{font-size:17px;font-weight:800;margin-bottom:4px;}
+.loc-modal-card p{font-size:12px;color:#888;margin-bottom:16px;}
+.loc-opt{display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;border:2px solid #eee;margin-bottom:8px;cursor:pointer;transition:all 0.15s;}
+.loc-opt.active,.loc-opt:hover{border-color:#FFD700;background:#fffde7;}
+.loc-opt-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.loc-opt-title{font-size:14px;font-weight:700;}
+.loc-opt-sub{font-size:11px;color:#888;}
+.loc-input{width:100%;border:2px solid #eee;border-radius:12px;padding:12px 14px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;margin-top:6px;display:none;}
+.loc-input:focus{border-color:#FFD700;}
+.btn-confirmar-loc{width:100%;background:#FFD700;color:#1a1a1a;border:none;border-radius:14px;padding:15px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-top:14px;}
+</style>
+</head>
+<body>
+
+<!-- ══════════ TOPO ══════════ -->
+<div class="app-header">
+  <div class="header-row1">
+    <!-- AVATAR DO USUÁRIO -->
+    <a href="minha-conta.html">
+      <div class="user-avatar" title="Minha Conta">EH</div>
+    </a>
+    <!-- BUSCA -->
+    <div class="search-wrap" onclick="window.location='busca.html'" style="cursor:pointer;">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Qual serviço você precisa?" readonly style="cursor:pointer;"/>
+    </div>
+    <!-- SINO -->
+    <div class="bell-wrap">
+      <button class="bell-btn" onclick="abrirNotif()" title="Notificações">
+        <i class="fas fa-bell"></i>
+      </button>
+      <div class="notif-badge" id="notifBadge">2</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ LOCALIZAÇÃO ══════════ -->
+<div class="location-strip" onclick="abrirLocModal()">
+  <i class="fas fa-map-marker-alt"></i>
+  <span id="locLabel">Pederneiras – SP</span>
+  <i class="fas fa-chevron-right chevron"></i>
+</div>
+
+<!-- ══════════ FILTRO POR CATEGORIA ══════════ -->
+<div class="filter-scroll" id="filterScroll">
+  <button class="f-chip active" onclick="filtrar(this,'Tudo')">Tudo</button>
+  <button class="f-chip" onclick="filtrar(this,'Beleza')">💇 Beleza</button>
+  <button class="f-chip" onclick="filtrar(this,'Elétrica')">⚡ Elétrica</button>
+  <button class="f-chip" onclick="filtrar(this,'Saúde')">🏥 Saúde</button>
+  <button class="f-chip" onclick="filtrar(this,'Reforma')">🏠 Reforma</button>
+  <button class="f-chip" onclick="filtrar(this,'Aulas')">📚 Aulas</button>
+  <button class="f-chip" onclick="filtrar(this,'Informática')">💻 Info</button>
+  <button class="f-chip" onclick="filtrar(this,'Advocacia')">⚖️ Juridico</button>
+  <button class="f-chip" onclick="filtrar(this,'Fotografia')">📸 Foto</button>
+  <button class="f-chip" onclick="filtrar(this,'Automotivo')">🚗 Auto</button>
+</div>
+
+<!-- ══════════ BANNER PUBLICITÁRIO ══════════ -->
+<div class="banner-wrap">
+  <div class="ad-banner" onclick="window.location='planos.html'">
+    <div class="ad-text">
+      <div class="ad-tag">📢 Espaço Publicitário</div>
+      <div class="ad-title">Divulgue aqui o<br/><span>seu negócio!</span></div>
+      <div class="ad-sub">Seu anúncio para toda a região</div>
+      <button class="btn-ad">Saiba mais →</button>
+    </div>
+    <div style="font-size:64px;z-index:1;position:relative;opacity:0.9;">📣</div>
+  </div>
+</div>
+
+<!-- ══════════ ÍCONES DE CATEGORIAS ══════════ -->
+<div class="section-header">
+  <h2>Categorias</h2>
+  <a href="busca.html">Ver todas</a>
+</div>
+<div class="cat-icons-wrap">
+  <div class="cat-icon-item" onclick="filtrarCat('Beleza')">
+    <div class="cat-icon-circle" style="background:#fdf0fb;">💇</div>
+    <span class="cat-icon-label">Beleza</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Elétrica')">
+    <div class="cat-icon-circle" style="background:#fff8e1;">⚡</div>
+    <span class="cat-icon-label">Elétrica</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Saúde')">
+    <div class="cat-icon-circle" style="background:#e8f5e9;">🏥</div>
+    <span class="cat-icon-label">Saúde</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Reforma')">
+    <div class="cat-icon-circle" style="background:#fff3e0;">🏠</div>
+    <span class="cat-icon-label">Reforma</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Aulas')">
+    <div class="cat-icon-circle" style="background:#e8f4ff;">📚</div>
+    <span class="cat-icon-label">Aulas</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Informática')">
+    <div class="cat-icon-circle" style="background:#f3e5f5;">💻</div>
+    <span class="cat-icon-label">Info</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Advocacia')">
+    <div class="cat-icon-circle" style="background:#e8eaf6;">⚖️</div>
+    <span class="cat-icon-label">Jurídico</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Automotivo')">
+    <div class="cat-icon-circle" style="background:#fce4ec;">🚗</div>
+    <span class="cat-icon-label">Auto</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Fotografia')">
+    <div class="cat-icon-circle" style="background:#e0f7fa;">📸</div>
+    <span class="cat-icon-label">Foto</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Contabilidade')">
+    <div class="cat-icon-circle" style="background:#f1f8e9;">📊</div>
+    <span class="cat-icon-label">Contab.</span>
+  </div>
+  <div class="cat-icon-item" onclick="filtrarCat('Hidráulica')">
+    <div class="cat-icon-circle" style="background:#e3f2fd;">🔧</div>
+    <span class="cat-icon-label">Hidráulica</span>
+  </div>
+  <div class="cat-icon-item" onclick="window.location='busca.html'">
+    <div class="cat-icon-circle" style="background:#f5f5f5;">+</div>
+    <span class="cat-icon-label">Ver todas</span>
+  </div>
+</div>
+
+<!-- ══════════ DESTAQUES — SCROLL HORIZONTAL ══════════ -->
+<div class="section-header" style="padding-top:8px;">
+  <h2>⭐ Profissionais em Destaque</h2>
+  <a href="busca.html">Ver todos</a>
+</div>
+<div class="highlight-wrap" id="highlightWrap">
+
+  <!-- PREMIUM 1 -->
+  <a href="perfil.html" class="hl-card">
+    <div class="hl-cover" style="background:linear-gradient(135deg,#1a1a1a,#3a3a3a);">✂️
+      <span class="hl-plan-tag">Premium</span>
+    </div>
+    <div class="hl-avatar">MA</div>
+    <div class="hl-body">
+      <div class="hl-name">Maria Andrade</div>
+      <div class="hl-role">Cabeleireira &amp; Sobrancelhas</div>
+      <div class="hl-stars">★★★★★ <span>(38)</span></div>
+      <div class="hl-dist"><i class="fas fa-location-arrow"></i> 1,2 km</div>
+      <div class="verified-tag"><i class="fas fa-check-circle" style="color:#25a244;"></i> Verificado</div>
+    </div>
+  </a>
+
+  <!-- PREMIUM 2 -->
+  <a href="perfil.html" class="hl-card">
+    <div class="hl-cover" style="background:linear-gradient(135deg,#1a1a2e,#333);">⚡
+      <span class="hl-plan-tag">Premium</span>
+    </div>
+    <div class="hl-avatar" style="background:#e63946;color:#fff;">JE</div>
+    <div class="hl-body">
+      <div class="hl-name">João Elétrica</div>
+      <div class="hl-role">Instalações Elétricas</div>
+      <div class="hl-stars">★★★★★ <span>(54)</span></div>
+      <div class="hl-dist"><i class="fas fa-location-arrow"></i> 3,1 km</div>
+      <div class="verified-tag"><i class="fas fa-check-circle" style="color:#25a244;"></i> Verificado</div>
+    </div>
+  </a>
+
+  <!-- PRÓ 1 -->
+  <a href="perfil.html" class="hl-card">
+    <div class="hl-cover" style="background:linear-gradient(135deg,#1e3a2f,#2d5a3d);">🍽️
+      <span class="hl-plan-tag pro">Pró</span>
+    </div>
+    <div class="hl-avatar" style="background:#0077b6;color:#fff;">RC</div>
+    <div class="hl-body">
+      <div class="hl-name">Roberto Construções</div>
+      <div class="hl-role">Pedreiro e Reformas</div>
+      <div class="hl-stars">★★★★☆ <span>(21)</span></div>
+      <div class="hl-dist"><i class="fas fa-location-arrow"></i> 2,5 km</div>
+    </div>
+  </a>
+
+  <!-- PRÓ 2 -->
+  <a href="perfil.html" class="hl-card">
+    <div class="hl-cover" style="background:linear-gradient(135deg,#2c1810,#5a3020);">📸
+      <span class="hl-plan-tag pro">Pró</span>
+    </div>
+    <div class="hl-avatar" style="background:#25a244;color:#fff;">LS</div>
+    <div class="hl-body">
+      <div class="hl-name">Luciana Silva</div>
+      <div class="hl-role">Nutricionista Clínica</div>
+      <div class="hl-stars">★★★★★ <span>(17)</span></div>
+      <div class="hl-dist"><i class="fas fa-location-arrow"></i> 4,0 km</div>
+    </div>
+  </a>
+
+  <!-- PRÓ 3 -->
+  <a href="perfil.html" class="hl-card">
+    <div class="hl-cover" style="background:linear-gradient(135deg,#1a1a3e,#2a2a5a);">⚖️
+      <span class="hl-plan-tag pro">Pró</span>
+    </div>
+    <div class="hl-avatar" style="background:#0a66c2;color:#fff;">DR</div>
+    <div class="hl-body">
+      <div class="hl-name">Dr. Rafael Mendes</div>
+      <div class="hl-role">Advogado Civil</div>
+      <div class="hl-stars">★★★★☆ <span>(29)</span></div>
+      <div class="hl-dist"><i class="fas fa-location-arrow"></i> 12 km</div>
+    </div>
+  </a>
+
+</div>
+
+<!-- ══════════ LISTA VERTICAL — SEM DESTAQUE ══════════ -->
+<div class="section-header">
+  <h2>Todos os Profissionais</h2>
+  <a href="busca.html">Ver mais</a>
+</div>
+
+<div class="list-section" id="listSection">
+
+  <a href="perfil.html" class="list-card">
+    <div class="list-cover-side" style="background:linear-gradient(135deg,#e0f7fa,#b2ebf2);">🔧
+      <div class="list-avatar-sm">FH</div>
+    </div>
+    <div class="list-info">
+      <div class="list-header">
+        <span class="list-name">Fernando Hidráulica</span>
+        <span class="badge badge-free" style="font-size:9px;padding:2px 6px;">Free</span>
+      </div>
+      <div class="list-role">Encanador e Manutenção Hidráulica</div>
+      <div class="list-stars">★★★★☆ <span>(12 aval.)</span></div>
+      <div class="list-meta">
+        <span class="list-dist"><i class="fas fa-location-arrow"></i> 5,3 km</span>
+        <span class="list-city">Pederneiras-SP</span>
+      </div>
+      <div class="list-contact-row">
+        <button class="lc-btn" style="background:#25D366;" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i></button>
+        <button class="lc-btn" style="background:#0077b6;" onclick="event.stopPropagation()"><i class="fas fa-phone"></i></button>
+      </div>
+    </div>
+  </a>
+
+  <a href="perfil.html" class="list-card">
+    <div class="list-cover-side" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0);">📚
+      <div class="list-avatar-sm" style="background:#e63946;color:#fff;">PP</div>
+    </div>
+    <div class="list-info">
+      <div class="list-header">
+        <span class="list-name">Patrícia Professora</span>
+        <span class="badge badge-free" style="font-size:9px;padding:2px 6px;">Free</span>
+      </div>
+      <div class="list-role">Aulas de Reforço – Ensino Fundamental</div>
+      <div class="list-stars">★★★★★ <span>(8 aval.)</span></div>
+      <div class="list-meta">
+        <span class="list-dist"><i class="fas fa-location-arrow"></i> 6,1 km</span>
+        <span class="list-city">Pederneiras-SP</span>
+      </div>
+      <div class="list-contact-row">
+        <button class="lc-btn" style="background:#25D366;" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i></button>
+      </div>
+    </div>
+  </a>
+
+  <a href="perfil.html" class="list-card">
+    <div class="list-cover-side" style="background:linear-gradient(135deg,#f3e5f5,#e1bee7);">💻
+      <div class="list-avatar-sm" style="background:#7b1fa2;color:#fff;">TM</div>
+    </div>
+    <div class="list-info">
+      <div class="list-header">
+        <span class="list-name">Tiago Mendes</span>
+        <span class="badge badge-free" style="font-size:9px;padding:2px 6px;">Free</span>
+      </div>
+      <div class="list-role">Técnico em Informática e Redes</div>
+      <div class="list-stars">★★★★☆ <span>(15 aval.)</span></div>
+      <div class="list-meta">
+        <span class="list-dist"><i class="fas fa-location-arrow"></i> 7,4 km</span>
+        <span class="list-city">Pederneiras-SP</span>
+      </div>
+      <div class="list-contact-row">
+        <button class="lc-btn" style="background:#25D366;" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i></button>
+        <button class="lc-btn" style="background:#0077b6;" onclick="event.stopPropagation()"><i class="fas fa-phone"></i></button>
+      </div>
+    </div>
+  </a>
+
+  <a href="perfil.html" class="list-card">
+    <div class="list-cover-side" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">📸
+      <div class="list-avatar-sm" style="background:#e65c00;color:#fff;">FF</div>
+    </div>
+    <div class="list-info">
+      <div class="list-header">
+        <span class="list-name">Fernanda Fotografia</span>
+        <span class="badge badge-free" style="font-size:9px;padding:2px 6px;">Free</span>
+      </div>
+      <div class="list-role">Fotógrafa de Eventos e Casamentos</div>
+      <div class="list-meta">
+        <span class="list-dist" style="color:#aaa;"><i class="fas fa-map-marker-alt"></i> 8,4 km</span>
+        <span class="list-city">Bauru-SP</span>
+      </div>
+      <div class="list-contact-row">
+        <button class="lc-btn" style="background:#25D366;" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i></button>
+        <button class="lc-btn" style="background:linear-gradient(135deg,#f09433,#bc1888);" onclick="event.stopPropagation()"><i class="fab fa-instagram"></i></button>
+      </div>
+    </div>
+  </a>
+
+  <a href="perfil.html" class="list-card">
+    <div class="list-cover-side" style="background:linear-gradient(135deg,#fff8e1,#ffecb3);">🚗
+      <div class="list-avatar-sm" style="background:#f57f17;color:#fff;">CG</div>
+    </div>
+    <div class="list-info">
+      <div class="list-header">
+        <span class="list-name">Carlos Garagem</span>
+        <span class="badge badge-free" style="font-size:9px;padding:2px 6px;">Free</span>
+      </div>
+      <div class="list-role">Mecânico Automotivo Geral</div>
+      <div class="list-stars">★★★☆☆ <span>(6 aval.)</span></div>
+      <div class="list-meta">
+        <span class="list-dist"><i class="fas fa-location-arrow"></i> 9,0 km</span>
+        <span class="list-city">Pederneiras-SP</span>
+      </div>
+      <div class="list-contact-row">
+        <button class="lc-btn" style="background:#25D366;" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i></button>
+        <button class="lc-btn" style="background:#0077b6;" onclick="event.stopPropagation()"><i class="fas fa-phone"></i></button>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- ══════════ NOTIF DRAWER ══════════ -->
+<div class="notif-overlay" id="notifOverlay" onclick="fecharNotif()"></div>
+<div class="notif-drawer" id="notifDrawer">
+  <div class="notif-head">
+    <h2>🔔 Notificações</h2>
+    <button class="notif-close" onclick="fecharNotif()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="notif-list">
+    <div class="notif-item unread">
+      <div class="notif-ico" style="background:#fffde7;">⭐</div>
+      <div class="notif-body"><p><strong>Ana Souza</strong> avaliou seu perfil com ★★★★★</p><span>há 2 horas</span></div>
+      <div class="unread-dot"></div>
+    </div>
+    <div class="notif-item unread">
+      <div class="notif-ico" style="background:#e8f5e9;">💬</div>
+      <div class="notif-body"><p><strong>Carla Lima</strong>: "Você atende aos sábados?"</p><span>há 4 horas</span></div>
+      <div class="unread-dot"></div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-ico" style="background:#e8f4ff;">📣</div>
+      <div class="notif-body"><p>Seu perfil foi <strong>visualizado 28 vezes</strong> hoje</p><span>há 6 horas</span></div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-ico" style="background:#fffde7;">⭐</div>
+      <div class="notif-body"><p><strong>Joana Pereira</strong> avaliou seu perfil com ★★★★☆</p><span>há 1 dia</span></div>
+    </div>
+  </div>
+  <button class="mark-all-btn" onclick="marcarLidas()"><i class="fas fa-check-double"></i> Marcar todas como lidas</button>
+</div>
+
+<!-- ══════════ MODAL LOCALIZAÇÃO ══════════ -->
+<div class="loc-modal" id="locModal">
+  <div class="loc-modal-card">
+    <h2>📍 Onde você está?</h2>
+    <p>Escolha como definir sua localização</p>
+    <div class="loc-opt active" id="optGps" onclick="escolherLoc('gps')">
+      <div class="loc-opt-ico" style="background:#e8f5e9;">🛰️</div>
+      <div><div class="loc-opt-title">Usar GPS automático</div><div class="loc-opt-sub">Detectar minha localização atual</div></div>
+    </div>
+    <div class="loc-opt" id="optManual" onclick="escolherLoc('manual')">
+      <div class="loc-opt-ico" style="background:#fffde7;">🏙️</div>
+      <div><div class="loc-opt-title">Digitar cidade</div><div class="loc-opt-sub">Buscar em qualquer cidade do Brasil</div></div>
+    </div>
+    <input class="loc-input" id="locInputManual" placeholder="Ex: Bauru – SP, Campinas – SP..."/>
+    <button class="btn-confirmar-loc" onclick="confirmarLoc()"><i class="fas fa-check"></i> Confirmar</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item active"><i class="fas fa-home"></i><span>Início</span></a>
+  <a href="busca.html" class="nav-item"><i class="fas fa-search"></i><span>Buscar</span></a>
+  <a href="cadastro.html" class="nav-item nav-center"><i class="fas fa-plus"></i></a>
+  <a href="utilidade.html" class="nav-item"><i class="fas fa-phone-alt"></i><span>Utilidade</span></a>
+  <a href="minha-conta.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+
+<script>
+// FILTRO CHIPS
+function filtrar(el, cat){
+  document.querySelectorAll('.f-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  if(cat !== 'Tudo'){
+    document.getElementById('listSection').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+function filtrarCat(cat){
+  window.location = 'busca.html';
+}
+
+// NOTIF
+function abrirNotif(){
+  document.getElementById('notifDrawer').classList.add('open');
+  document.getElementById('notifOverlay').classList.add('open');
+}
+function fecharNotif(){
+  document.getElementById('notifDrawer').classList.remove('open');
+  document.getElementById('notifOverlay').classList.remove('open');
+}
+function marcarLidas(){
+  document.querySelectorAll('.notif-item.unread').forEach(i=>{
+    i.classList.remove('unread');
+    var d=i.querySelector('.unread-dot');
+    if(d)d.remove();
+  });
+  document.getElementById('notifBadge').style.display='none';
+}
+
+// LOCALIZAÇÃO
+function abrirLocModal(){ document.getElementById('locModal').classList.add('open'); }
+function fecharLocModal(){ document.getElementById('locModal').classList.remove('open'); }
+function escolherLoc(tipo){
+  document.querySelectorAll('.loc-opt').forEach(o=>o.classList.remove('active'));
+  document.getElementById('opt'+tipo.charAt(0).toUpperCase()+tipo.slice(1)).classList.add('active');
+  document.getElementById('locInputManual').style.display = tipo==='manual'?'block':'none';
+  if(tipo==='gps' && navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      document.getElementById('locLabel').textContent = 'Localização GPS ativa';
+    });
+  }
+}
+function confirmarLoc(){
+  var manual = document.getElementById('locInputManual').value.trim();
+  if(manual) document.getElementById('locLabel').textContent = manual;
+  fecharLocModal();
+}
+document.getElementById('locModal').addEventListener('click',function(e){
+  if(e.target===this) fecharLocModal();
+});
+
+// GPS automático ao abrir
+if(navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(pos=>{
+    document.getElementById('locLabel').textContent = 'Sua localização atual';
+  });
+}
+</script>
+</body>
+</html>
