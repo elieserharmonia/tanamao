@@ -130,10 +130,12 @@ a { text-decoration: none; color: inherit; }
   font-size: 20px; font-weight: 800;
   display: flex; align-items: center; justify-content: center;
   border: 3px solid #fff;
-  position: absolute; top: 50px; left: 16px;
+  position: absolute; top: 42px; left: 14px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 2;
+  overflow: hidden;
 }
-.card-info { padding: 14px 16px 14px 88px; min-height: 90px; }
+.card-info { padding: 36px 14px 14px 86px; min-height: 100px; }
 .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
 .card-info h3 { font-size: 15px; font-weight: 700; }
 .badge {

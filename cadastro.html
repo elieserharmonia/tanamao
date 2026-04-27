@@ -8,85 +8,151 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-.cad-header {
-  background: #FFD700; padding: 16px;
-  display: flex; align-items: center; gap: 12px;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.cad-header h1 { font-size: 18px; font-weight: 800; color: #1a1a1a; }
-
 /* PLANOS */
-.plans-section { padding: 20px 16px 0; }
-.plans-section h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-.plans-section p { font-size: 12px; color: #666; margin-bottom: 14px; }
-.plans-grid { display: flex; flex-direction: column; gap: 12px; }
-.plan-card {
-  border: 2px solid #eee; border-radius: 16px; padding: 16px;
-  cursor: pointer; transition: all 0.2s; position: relative;
+.cad-header{background:#FFD700;padding:14px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.cad-header h1{font-size:18px;font-weight:800;color:#1a1a1a;}
+.plans-section{padding:20px 16px 0;}
+.plans-section h2{font-size:16px;font-weight:700;margin-bottom:4px;}
+.plans-section p{font-size:12px;color:#666;margin-bottom:14px;}
+.plans-grid{display:flex;flex-direction:column;gap:12px;}
+.plan-card{border:2px solid #eee;border-radius:16px;padding:16px;cursor:pointer;transition:all 0.2s;position:relative;}
+.plan-card.selected{border-color:#FFD700;background:#fffde7;}
+.plan-card.popular{border-color:#0077b6;}
+.plan-popular-badge{position:absolute;top:-10px;right:16px;background:#0077b6;color:#fff;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;}
+.plan-name{font-size:18px;font-weight:800;margin-bottom:2px;}
+.plan-price{font-size:22px;font-weight:800;color:#1a1a1a;margin-bottom:8px;}
+.plan-price span{font-size:13px;font-weight:400;color:#888;}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.plan-features li{font-size:12px;color:#555;display:flex;align-items:center;gap:6px;}
+.feat-ok{color:#2e7d32;font-size:11px;}
+.feat-no{color:#ccc;font-size:11px;}
+
+/* TIPO DE CONTA */
+.tipo-section{padding:20px 16px 0;}
+.tipo-section h2{font-size:16px;font-weight:700;margin-bottom:14px;}
+.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;}
+.tipo-card{
+  border:2px solid #eee;border-radius:16px;padding:16px;
+  text-align:center;cursor:pointer;transition:all 0.2s;
+  font-family:'Poppins',sans-serif;background:#fff;
 }
-.plan-card.selected { border-color: #FFD700; background: #fffde7; }
-.plan-card.popular { border-color: #0077b6; }
-.plan-popular-badge {
-  position: absolute; top: -10px; right: 16px;
-  background: #0077b6; color: #fff;
-  font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px;
-}
-.plan-name { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
-.plan-price { font-size: 22px; font-weight: 800; color: #1a1a1a; margin-bottom: 8px; }
-.plan-price span { font-size: 13px; font-weight: 400; color: #888; }
-.plan-features { list-style: none; display: flex; flex-direction: column; gap: 5px; }
-.plan-features li { font-size: 12px; color: #555; display: flex; align-items: center; gap: 6px; }
-.plan-features li i { font-size: 11px; }
-.feat-ok { color: #2e7d32; }
-.feat-no { color: #ccc; }
+.tipo-card.active{border-color:#FFD700;background:#fffde7;}
+.tipo-icon{font-size:32px;margin-bottom:8px;}
+.tipo-label{font-size:14px;font-weight:800;color:#1a1a1a;}
+.tipo-sub{font-size:11px;color:#888;margin-top:3px;}
 
 /* FORM */
-.form-section { padding: 20px 16px; }
-.form-section h2 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
-.form-group { margin-bottom: 14px; }
-.form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 5px; color: #333; }
-.form-group input, .form-group select, .form-group textarea {
-  width: 100%; border: 2px solid #eee; border-radius: 10px;
-  padding: 11px 14px; font-family: 'Poppins',sans-serif; font-size: 13px;
-  outline: none; transition: border 0.2s; color: #1a1a1a;
-}
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  border-color: #FFD700;
-}
-.form-group textarea { resize: vertical; min-height: 80px; }
-.required-note { font-size: 10px; color: #e63946; margin-left: 4px; }
+.form-section{padding:16px;}
+.form-section h2{font-size:14px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.5px;padding-bottom:10px;border-bottom:1px solid #f0f0f0;margin-bottom:14px;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:#333;}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:2px solid #eee;border-radius:10px;padding:11px 14px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;transition:border 0.2s;color:#1a1a1a;background:#fafafa;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#FFD700;background:#fff;}
+.form-group textarea{resize:vertical;min-height:80px;}
+.required-note{font-size:10px;color:#e63946;margin-left:4px;}
+.input-upper{text-transform:uppercase;font-weight:700;letter-spacing:0.5px;}
+.field-hint{font-size:10px;color:#aaa;margin-top:4px;display:flex;align-items:center;gap:4px;}
 
-.upload-area {
-  border: 2px dashed #FFD700; border-radius: 12px;
-  padding: 20px; text-align: center; cursor: pointer;
-  background: #fffde7;
+/* UPLOAD FOTOS */
+.upload-area{
+  border:2px dashed #FFD700;border-radius:12px;
+  padding:20px;text-align:center;cursor:pointer;
+  background:#fffde7;position:relative;overflow:hidden;
 }
-.upload-area i { font-size: 28px; color: #FFD700; margin-bottom: 6px; }
-.upload-area p { font-size: 12px; color: #666; }
-.upload-area strong { font-size: 13px; color: #1a1a1a; }
+.upload-area input[type=file]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.upload-area i{font-size:28px;color:#e6b800;margin-bottom:6px;pointer-events:none;}
+.upload-area p{font-size:12px;color:#666;pointer-events:none;}
+.upload-area strong{font-size:13px;color:#1a1a1a;pointer-events:none;}
+.upload-preview{
+  display:flex;align-items:center;gap:10px;
+  background:#e8f5e9;border-radius:10px;padding:10px;
+  margin-top:8px;display:none;
+}
+.upload-preview i{color:#25a244;font-size:18px;}
+.upload-preview span{font-size:12px;font-weight:600;color:#2e7d32;}
 
-.btn-submit {
-  width: 100%; background: #FFD700; color: #1a1a1a;
-  border: none; border-radius: 14px; padding: 16px;
-  font-family: 'Poppins',sans-serif; font-size: 16px; font-weight: 800;
-  cursor: pointer; margin-top: 10px;
-  box-shadow: 0 4px 14px rgba(255,215,0,0.4);
+/* CEP */
+.cep-row{display:flex;gap:8px;align-items:flex-end;}
+.cep-row .form-group{flex:1;margin-bottom:0;}
+.btn-cep{
+  background:#FFD700;border:none;border-radius:10px;
+  padding:11px 16px;font-family:'Poppins',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;
+  height:44px;display:flex;align-items:center;gap:6px;
+}
+.cep-loading{display:none;font-size:11px;color:#0077b6;margin-top:4px;}
+.form-row-2{display:grid;grid-template-columns:2fr 1fr;gap:10px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+
+/* TOGGLE ENDEREÇO */
+.endereco-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#fff;border:2px solid #eee;border-radius:12px;
+  padding:14px;margin-bottom:8px;
+}
+.toggle-info .toggle-title{font-size:14px;font-weight:700;}
+.toggle-info .toggle-sub{font-size:11px;color:#888;margin-top:2px;}
+.switch{position:relative;width:48px;height:26px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.slider{
+  position:absolute;inset:0;background:#ccc;border-radius:26px;
+  cursor:pointer;transition:0.3s;
+}
+.slider:before{
+  content:'';position:absolute;height:20px;width:20px;
+  left:3px;bottom:3px;background:#fff;border-radius:50%;
+  transition:0.3s;
+}
+input:checked+.slider{background:#FFD700;}
+input:checked+.slider:before{transform:translateX(22px);}
+.endereco-obrigatorio{
+  background:#fff3e0;border-radius:10px;padding:10px;
+  font-size:11px;color:#e65c00;display:flex;align-items:center;gap:8px;
+  margin-bottom:10px;display:none;
+}
+
+/* BOTÃO PUBLICAR */
+.btn-submit{
+  width:100%;background:#FFD700;color:#1a1a1a;
+  border:none;border-radius:14px;padding:16px;
+  font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;
+  cursor:pointer;margin-top:10px;
+  box-shadow:0 4px 14px rgba(255,215,0,0.4);
+  display:flex;align-items:center;justify-content:center;gap:8px;
 }
 </style>
 </head>
 <body>
 
 <div class="cad-header">
-  <a href="index.html" style="color:#1a1a1a; font-size:18px;"><i class="fas fa-arrow-left"></i></a>
+  <a href="index.html" style="color:#1a1a1a;font-size:18px;"><i class="fas fa-arrow-left"></i></a>
   <h1>Anunciar Serviço</h1>
 </div>
 
+<!-- TIPO DE CONTA -->
+<div class="tipo-section">
+  <h2>Você é:</h2>
+  <div class="tipo-grid">
+    <button class="tipo-card active" id="tipoPF" onclick="setTipo('pf')">
+      <div class="tipo-icon">👤</div>
+      <div class="tipo-label">Profissional</div>
+      <div class="tipo-sub">Pessoa Física</div>
+    </button>
+    <button class="tipo-card" id="tipoPJ" onclick="setTipo('pj')">
+      <div class="tipo-icon">🏢</div>
+      <div class="tipo-label">Empresa</div>
+      <div class="tipo-sub">Pessoa Jurídica</div>
+    </button>
+  </div>
+</div>
+
+<!-- PLANOS -->
 <div class="plans-section">
   <h2>Escolha seu plano</h2>
   <p>Comece grátis. Faça upgrade quando quiser.</p>
   <div class="plans-grid">
-
     <div class="plan-card selected" onclick="selectPlan(this)">
       <div class="plan-name">Free</div>
       <div class="plan-price">R$ 0 <span>/mês</span></div>
@@ -96,24 +162,20 @@
         <li><i class="fas fa-check feat-ok"></i> WhatsApp e telefone</li>
         <li><i class="fas fa-times feat-no"></i> Galeria de trabalhos</li>
         <li><i class="fas fa-times feat-no"></i> Avaliações de clientes</li>
-        <li><i class="fas fa-times feat-no"></i> Destaque nas buscas</li>
       </ul>
     </div>
-
     <div class="plan-card popular" onclick="selectPlan(this)">
       <div class="plan-popular-badge">Mais Popular</div>
       <div class="plan-name" style="color:#0077b6">Pró</div>
       <div class="plan-price">R$ 29,90 <span>/mês</span></div>
       <ul class="plan-features">
         <li><i class="fas fa-check feat-ok"></i> Tudo do Free</li>
-        <li><i class="fas fa-check feat-ok"></i> Galeria (até 10 fotos)</li>
+        <li><i class="fas fa-check feat-ok"></i> Galeria até 10 fotos</li>
         <li><i class="fas fa-check feat-ok"></i> Avaliações de clientes</li>
         <li><i class="fas fa-check feat-ok"></i> Todos os contatos sociais</li>
         <li><i class="fas fa-check feat-ok"></i> Selo "Verificado"</li>
-        <li><i class="fas fa-times feat-no"></i> Destaque premium nas buscas</li>
       </ul>
     </div>
-
     <div class="plan-card" onclick="selectPlan(this)">
       <div class="plan-name" style="color:#e65c00">Premium</div>
       <div class="plan-price">R$ 79,90 <span>/mês</span></div>
@@ -125,41 +187,84 @@
         <li><i class="fas fa-check feat-ok"></i> Suporte prioritário</li>
       </ul>
     </div>
-
   </div>
 </div>
 
-<div class="form-section">
-  <h2>Seus dados profissionais</h2>
+<!-- FOTOS -->
+<div class="form-section" style="margin-top:16px;background:#fff;">
+  <h2>Fotos do Perfil</h2>
 
   <div class="form-group">
-    <label>Foto de Perfil <span class="required-note">* obrigatório</span></label>
-    <div class="upload-area">
-      <i class="fas fa-user-circle"></i>
-      <strong>Enviar foto com rosto visível</strong>
-      <p>JPG ou PNG • Máx 5MB • Foto real para verificação</p>
+    <label>
+      Foto de Perfil <span class="required-note">* obrigatório</span>
+    </label>
+    <div class="upload-area" id="uploadPerfilArea">
+      <input type="file" accept="image/*" id="inputFotoPerfil" onchange="previewFoto(this,'previewPerfil','uploadPerfilArea')"/>
+      <i class="fas fa-user-circle" id="iconPerfil"></i>
+      <strong id="textoFotoPerfil">Toque aqui para enviar foto com rosto visível</strong>
+      <p id="subFotoPerfil">JPG ou PNG • Máx 5MB • Foto real obrigatória</p>
+    </div>
+    <div class="upload-preview" id="previewPerfil">
+      <i class="fas fa-check-circle"></i>
+      <span id="nomeFotoPerfil">foto_perfil.jpg</span>
+      <button onclick="removerFoto('inputFotoPerfil','previewPerfil','uploadPerfilArea','iconPerfil','textoFotoPerfil','subFotoPerfil')"
+        style="margin-left:auto;background:none;border:none;color:#e63946;cursor:pointer;font-size:16px;">✕</button>
+    </div>
+    <p class="field-hint"><i class="fas fa-shield-alt" style="color:#e63946;"></i> Foto do rosto é obrigatória para verificação de identidade e segurança dos contratantes</p>
+  </div>
+
+  <div class="form-group">
+    <label>Foto de Capa <span style="font-size:10px;color:#888;">(opcional – mostre um trabalho realizado)</span></label>
+    <div class="upload-area" id="uploadCapaArea">
+      <input type="file" accept="image/*" id="inputFotoCapa" onchange="previewFoto(this,'previewCapa','uploadCapaArea')"/>
+      <i class="fas fa-image" id="iconCapa"></i>
+      <strong id="textoFotoCapa">Toque aqui para enviar foto de capa</strong>
+      <p id="subFotoCapa">Foto de um trabalho realizado • JPG ou PNG</p>
+    </div>
+    <div class="upload-preview" id="previewCapa">
+      <i class="fas fa-check-circle"></i>
+      <span id="nomeFotoCapa">foto_capa.jpg</span>
+      <button onclick="removerFoto('inputFotoCapa','previewCapa','uploadCapaArea','iconCapa','textoFotoCapa','subFotoCapa')"
+        style="margin-left:auto;background:none;border:none;color:#e63946;cursor:pointer;font-size:16px;">✕</button>
     </div>
   </div>
+</div>
+
+<!-- DADOS BÁSICOS -->
+<div class="form-section" style="margin-top:8px;background:#fff;">
+  <h2 id="tituloSecaoDados">Dados do Profissional</h2>
 
   <div class="form-group">
-    <label>Foto de Capa (trabalho realizado)</label>
-    <div class="upload-area">
-      <i class="fas fa-image"></i>
-      <strong>Adicionar foto de capa</strong>
-      <p>Mostre seu melhor trabalho!</p>
-    </div>
+    <label id="labelNome">Nome Completo <span class="required-note">*</span></label>
+    <input type="text" id="inputNome" class="input-upper" placeholder="SEU NOME COMPLETO"
+      oninput="this.value=this.value.toUpperCase()"/>
+    <p class="field-hint"><i class="fas fa-info-circle"></i> <span id="hintNome">Nome em letras MAIÚSCULAS</span></p>
   </div>
 
   <div class="form-group">
-    <label>Nome completo / Nome do negócio <span class="required-note">*</span></label>
-    <input type="text" placeholder="Ex: João Silva Elétrica"/>
+    <label id="labelAtividade">Atividade / Serviço prestado <span class="required-note">*</span></label>
+    <input type="text" id="inputAtividade" placeholder="Ex: Cabeleireira e Designer de Sobrancelhas"
+      oninput="capitalizarAtividade(this)"/>
+    <p class="field-hint"><i class="fas fa-info-circle"></i> Primeira letra maiúscula, restante minúsculo</p>
+  </div>
+
+  <div class="form-group" id="grupoCPF">
+    <label>CPF <span class="required-note">*</span></label>
+    <input type="text" id="inputCPF" placeholder="000.000.000-00" maxlength="14"
+      oninput="formatarCPF(this)"/>
+  </div>
+
+  <div class="form-group" id="grupoCNPJ" style="display:none;">
+    <label>CNPJ <span class="required-note">*</span></label>
+    <input type="text" id="inputCNPJ" placeholder="00.000.000/0001-00" maxlength="18"
+      oninput="formatarCNPJ(this)"/>
   </div>
 
   <div class="form-group">
-    <label>Categoria do serviço <span class="required-note">*</span></label>
-    <select>
+    <label>Categoria principal <span class="required-note">*</span></label>
+    <select id="selectCategoria">
       <option value="">Selecione uma categoria...</option>
-      <option>Elétrica</option><option>Hidráulica</option><option>Beleza</option>
+      <option>Beleza</option><option>Elétrica</option><option>Hidráulica</option>
       <option>Saúde</option><option>Reforma</option><option>Aulas</option>
       <option>Informática</option><option>Advocacia</option><option>Contabilidade</option>
       <option>Automotivo</option><option>Fotografia</option><option>Outra</option>
@@ -168,46 +273,312 @@
 
   <div class="form-group">
     <label>Bio / Descrição dos serviços <span class="required-note">*</span></label>
-    <textarea placeholder="Conte um pouco sobre você e os serviços que oferece. Seja direto e objetivo!"></textarea>
+    <textarea id="bioField" placeholder="Conte sobre você e os serviços que oferece. Seja direto e objetivo!" oninput="contarBio(this)"></textarea>
+    <p class="field-hint" style="justify-content:flex-end;"><span id="bioCount">0</span>/300</p>
+  </div>
+</div>
+
+<!-- ENDEREÇO -->
+<div class="form-section" style="margin-top:8px;background:#fff;">
+  <h2>📍 Endereço</h2>
+
+  <!-- TOGGLE MOSTRAR / OCULTAR (só PF) -->
+  <div class="endereco-toggle" id="toggleEnderecoWrap">
+    <div class="toggle-info">
+      <div class="toggle-title">Mostrar endereço no perfil</div>
+      <div class="toggle-sub" id="toggleEnderecoSub">Opcional para profissionais autônomos</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="checkMostrarEndereco" onchange="toggleMostrarEndereco(this)"/>
+      <span class="slider"></span>
+    </label>
   </div>
 
-  <div class="form-group">
-    <label>WhatsApp <span class="required-note">*</span></label>
-    <input type="tel" placeholder="(14) 99999-0000"/>
+  <div class="endereco-obrigatorio" id="avisoEnderecoObrig">
+    <i class="fas fa-exclamation-triangle" style="font-size:16px;flex-shrink:0;"></i>
+    Para empresas (pessoa jurídica), exibir o endereço completo é <strong>obrigatório</strong>.
   </div>
 
-  <div class="form-group">
-    <label>Telefone</label>
-    <input type="tel" placeholder="(14) 3282-0000"/>
+  <!-- CEP -->
+  <div class="cep-row">
+    <div class="form-group">
+      <label>CEP <span class="required-note">*</span></label>
+      <input type="text" id="inputCEP" placeholder="00000-000" maxlength="9"
+        oninput="formatarCEP(this)"/>
+    </div>
+    <button class="btn-cep" onclick="buscarCEP()">
+      <i class="fas fa-search"></i> Buscar
+    </button>
+  </div>
+  <p class="cep-loading" id="cepLoading"><i class="fas fa-spinner fa-spin"></i> Buscando endereço...</p>
+  <p class="field-hint" id="cepErro" style="color:#e63946;display:none;"><i class="fas fa-exclamation-circle"></i> CEP não encontrado. Preencha manualmente.</p>
+
+  <!-- RUA + NÚMERO -->
+  <div class="form-row-2">
+    <div class="form-group">
+      <label>Rua / Avenida <span class="required-note">*</span></label>
+      <input type="text" id="inputRua" placeholder="Rua das Flores"/>
+    </div>
+    <div class="form-group">
+      <label>Número <span class="required-note">*</span></label>
+      <input type="text" id="inputNumero" placeholder="123"/>
+    </div>
   </div>
 
+  <!-- COMPLEMENTO + BAIRRO -->
+  <div class="form-row-2">
+    <div class="form-group">
+      <label>Bairro <span class="required-note">*</span></label>
+      <input type="text" id="inputBairro" placeholder="Centro"/>
+    </div>
+    <div class="form-group">
+      <label>Complemento</label>
+      <input type="text" id="inputComplemento" placeholder="Apto, Sala..."/>
+    </div>
+  </div>
+
+  <!-- CIDADE + ESTADO -->
+  <div class="form-row-2">
+    <div class="form-group">
+      <label>Cidade <span class="required-note">*</span></label>
+      <input type="text" id="inputCidade" placeholder="Pederneiras"/>
+    </div>
+    <div class="form-group">
+      <label>Estado <span class="required-note">*</span></label>
+      <input type="text" id="inputEstado" placeholder="SP" maxlength="2"
+        style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()"/>
+    </div>
+  </div>
+
+  <!-- PONTO DE REFERÊNCIA -->
   <div class="form-group">
-    <label>E-mail</label>
+    <label>Ponto de referência</label>
+    <input type="text" id="inputReferencia" placeholder="Ex: Próximo ao Mercado Central, em frente à praça..."/>
+    <p class="field-hint"><i class="fas fa-lightbulb" style="color:#e6b800;"></i> Ajuda os clientes a te encontrar com facilidade</p>
+  </div>
+</div>
+
+<!-- CONTATOS -->
+<div class="form-section" style="margin-top:8px;background:#fff;">
+  <h2>Contatos</h2>
+  <div class="form-group">
+    <label><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp <span class="required-note">*</span></label>
+    <input type="tel" placeholder="(14) 99999-0000" oninput="formatarTel(this)"/>
+  </div>
+  <div class="form-group">
+    <label><i class="fas fa-phone" style="color:#0077b6;"></i> Telefone</label>
+    <input type="tel" placeholder="(14) 3282-0000" oninput="formatarTel(this)"/>
+  </div>
+  <div class="form-group">
+    <label><i class="fas fa-envelope" style="color:#e63946;"></i> E-mail</label>
     <input type="email" placeholder="seu@email.com"/>
   </div>
-
   <div class="form-group">
-    <label>Instagram</label>
+    <label><i class="fab fa-instagram" style="color:#bc1888;"></i> Instagram</label>
     <input type="text" placeholder="@seu_perfil"/>
   </div>
-
   <div class="form-group">
-    <label>Endereço / Cidade de atuação</label>
-    <input type="text" placeholder="Pederneiras – SP"/>
+    <label><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook</label>
+    <input type="text" placeholder="/sua_pagina"/>
   </div>
+  <div class="form-group">
+    <label><i class="fab fa-linkedin" style="color:#0a66c2;"></i> LinkedIn</label>
+    <input type="text" placeholder="linkedin.com/in/seu-perfil"/>
+  </div>
+</div>
 
-  <button class="btn-submit">🚀 Publicar meu Perfil</button>
+<!-- PUBLICAR -->
+<div style="padding:16px 16px 100px;">
+  <button class="btn-submit" onclick="publicar()">
+    <i class="fas fa-rocket"></i> Publicar meu Perfil
+  </button>
   <p style="text-align:center;font-size:11px;color:#888;margin-top:10px;">
     Ao publicar, você concorda com os Termos de Uso do TÁNAMÃO.
   </p>
 </div>
 
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a>
+  <a href="busca.html" class="nav-item"><i class="fas fa-search"></i><span>Buscar</span></a>
+  <a href="cadastro.html" class="nav-item nav-center active"><i class="fas fa-plus"></i></a>
+  <a href="utilidade.html" class="nav-item"><i class="fas fa-phone-alt"></i><span>Utilidade</span></a>
+  <a href="minha-conta.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+
 <script>
-function selectPlan(el) {
-  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+var tipoAtual = 'pf';
+
+// ===== TIPO PF / PJ =====
+function setTipo(tipo){
+  tipoAtual = tipo;
+  document.getElementById('tipoPF').classList.toggle('active', tipo==='pf');
+  document.getElementById('tipoPJ').classList.toggle('active', tipo==='pj');
+
+  if(tipo==='pj'){
+    document.getElementById('tituloSecaoDados').textContent = 'Dados da Empresa';
+    document.getElementById('labelNome').innerHTML = 'Nome da Empresa <span class="required-note">*</span>';
+    document.getElementById('inputNome').placeholder = 'NOME DA EMPRESA EM MAIÚSCULAS';
+    document.getElementById('labelAtividade').innerHTML = 'Ramo de Atividade <span class="required-note">*</span>';
+    document.getElementById('inputAtividade').placeholder = 'Ex: Supermercado, Farmácia, Loja de Roupas';
+    document.getElementById('grupoCPF').style.display='none';
+    document.getElementById('grupoCNPJ').style.display='block';
+    // Empresa: endereço obrigatório
+    document.getElementById('checkMostrarEndereco').checked=true;
+    document.getElementById('checkMostrarEndereco').disabled=true;
+    document.getElementById('toggleEnderecoSub').textContent='Obrigatório para empresas';
+    document.getElementById('avisoEnderecoObrig').style.display='flex';
+    document.getElementById('hintNome').textContent='Nome da empresa em letras MAIÚSCULAS';
+  } else {
+    document.getElementById('tituloSecaoDados').textContent = 'Dados do Profissional';
+    document.getElementById('labelNome').innerHTML = 'Nome Completo <span class="required-note">*</span>';
+    document.getElementById('inputNome').placeholder = 'SEU NOME COMPLETO';
+    document.getElementById('labelAtividade').innerHTML = 'Atividade / Serviço prestado <span class="required-note">*</span>';
+    document.getElementById('inputAtividade').placeholder = 'Ex: Cabeleireira e Designer de Sobrancelhas';
+    document.getElementById('grupoCPF').style.display='block';
+    document.getElementById('grupoCNPJ').style.display='none';
+    document.getElementById('checkMostrarEndereco').disabled=false;
+    document.getElementById('toggleEnderecoSub').textContent='Opcional para profissionais autônomos';
+    document.getElementById('avisoEnderecoObrig').style.display='none';
+    document.getElementById('hintNome').textContent='Nome em letras MAIÚSCULAS';
+  }
+}
+
+// ===== NOME SEMPRE MAIÚSCULO =====
+// já controlado pelo oninput no HTML
+
+// ===== ATIVIDADE: Primeira letra maiúscula, resto minúsculo =====
+function capitalizarAtividade(el){
+  var v = el.value;
+  if(v.length===0) return;
+  el.value = v.charAt(0).toUpperCase() + v.slice(1).toLowerCase();
+}
+
+// ===== UPLOAD FOTOS — botões clicáveis =====
+function previewFoto(input, previewId, areaId){
+  if(!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var area = document.getElementById(areaId);
+  var preview = document.getElementById(previewId);
+
+  // Mostrar nome do arquivo
+  var nomeId = previewId === 'previewPerfil' ? 'nomeFotoPerfil' : 'nomeFotoCapa';
+  document.getElementById(nomeId).textContent = file.name;
+
+  // Trocar background da área para verde
+  area.style.borderColor = '#25a244';
+  area.style.background = '#e8f5e9';
+  if(previewId==='previewPerfil'){
+    document.getElementById('iconPerfil').style.color='#25a244';
+    document.getElementById('textoFotoPerfil').textContent = '✓ Foto de perfil selecionada';
+    document.getElementById('subFotoPerfil').textContent = file.name;
+  } else {
+    document.getElementById('iconCapa').style.color='#25a244';
+    document.getElementById('textoFotoCapa').textContent = '✓ Foto de capa selecionada';
+    document.getElementById('subFotoCapa').textContent = file.name;
+  }
+  preview.style.display='flex';
+}
+
+function removerFoto(inputId, previewId, areaId, iconId, textoId, subId){
+  document.getElementById(inputId).value='';
+  document.getElementById(previewId).style.display='none';
+  var area = document.getElementById(areaId);
+  area.style.borderColor='#FFD700';
+  area.style.background='#fffde7';
+  var isPeril = previewId==='previewPerfil';
+  document.getElementById(iconId).style.color='#e6b800';
+  document.getElementById(textoId).textContent = isPeril
+    ? 'Toque aqui para enviar foto com rosto visível'
+    : 'Toque aqui para enviar foto de capa';
+  document.getElementById(subId).textContent = isPeril
+    ? 'JPG ou PNG • Máx 5MB • Foto real obrigatória'
+    : 'Foto de um trabalho realizado • JPG ou PNG';
+}
+
+// ===== TOGGLE ENDEREÇO =====
+function toggleMostrarEndereco(el){
+  // sem ação visual extra além do toggle switch
+}
+
+// ===== CEP =====
+function formatarCEP(el){
+  var v = el.value.replace(/\D/g,'').substring(0,8);
+  if(v.length>5) v = v.substring(0,5)+'-'+v.substring(5);
+  el.value = v;
+  if(v.replace('-','').length===8) buscarCEP();
+}
+
+function buscarCEP(){
+  var cep = document.getElementById('inputCEP').value.replace(/\D/g,'');
+  if(cep.length!==8){ return; }
+  document.getElementById('cepLoading').style.display='block';
+  document.getElementById('cepErro').style.display='none';
+
+  fetch('https://viacep.com.br/ws/'+cep+'/json/')
+    .then(r=>r.json())
+    .then(data=>{
+      document.getElementById('cepLoading').style.display='none';
+      if(data.erro){
+        document.getElementById('cepErro').style.display='flex';
+        return;
+      }
+      document.getElementById('inputRua').value = data.logradouro || '';
+      document.getElementById('inputBairro').value = data.bairro || '';
+      document.getElementById('inputCidade').value = data.localidade || '';
+      document.getElementById('inputEstado').value = data.uf || '';
+      document.getElementById('inputNumero').focus();
+    })
+    .catch(()=>{
+      document.getElementById('cepLoading').style.display='none';
+      document.getElementById('cepErro').style.display='flex';
+    });
+}
+
+// ===== FORMATADORES =====
+function formatarCPF(el){
+  var v = el.value.replace(/\D/g,'').substring(0,11);
+  v = v.replace(/(\d{3})(\d)/,'$1.$2')
+       .replace(/(\d{3})(\d)/,'$1.$2')
+       .replace(/(\d{3})(\d)/,'$1-$2');
+  el.value = v;
+}
+function formatarCNPJ(el){
+  var v = el.value.replace(/\D/g,'').substring(0,14);
+  v = v.replace(/(\d{2})(\d)/,'$1.$2')
+       .replace(/(\d{3})(\d)/,'$1.$2')
+       .replace(/(\d{3})(\d)/,'$1/$2')
+       .replace(/(\d{4})(\d)/,'$1-$2');
+  el.value = v;
+}
+function formatarTel(el){
+  var v = el.value.replace(/\D/g,'').substring(0,11);
+  if(v.length>2) v='('+v.substring(0,2)+') '+v.substring(2);
+  if(v.length>10) v=v.substring(0,10)+'-'+v.substring(10);
+  el.value = v;
+}
+
+function contarBio(el){
+  var n = Math.min(el.value.length, 300);
+  document.getElementById('bioCount').textContent = n;
+  if(n>=300) el.value = el.value.substring(0,300);
+}
+
+// ===== PLANOS =====
+function selectPlan(el){
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
 }
-</script>
 
+// ===== PUBLICAR =====
+function publicar(){
+  var nome = document.getElementById('inputNome').value.trim();
+  var wp = document.querySelector('input[type=tel]').value.trim();
+  var cep = document.getElementById('inputCEP').value.trim();
+  if(!nome){ alert('Preencha o nome.'); return; }
+  if(!wp){ alert('Preencha o WhatsApp.'); return; }
+  alert('Perfil enviado para análise! Em breve você receberá uma confirmação.');
+  window.location='index.html';
+}
+</script>
 </body>
 </html>
