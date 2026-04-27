@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Galeria de Trabalhos – TÁNAMÃO</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+.gal-header{
+  background:#FFD700;padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+.gal-header-left{display:flex;align-items:center;gap:12px;}
+.gal-header h1{font-size:18px;font-weight:800;color:#1a1a1a;}
+
+.usage-bar-wrap{padding:16px;}
+.usage-card{
+  background:#fff;border-radius:16px;padding:16px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.07);
+}
+.usage-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.usage-title{font-size:14px;font-weight:700;}
+.usage-count{font-size:13px;color:#888;font-weight:600;}
+.bar-bg{background:#f0f0f0;border-radius:10px;height:8px;}
+.bar-fill{background:#FFD700;border-radius:10px;height:8px;width:60%;transition:width 0.5s;}
+.usage-note{font-size:11px;color:#888;margin-top:8px;}
+.usage-note a{color:#0077b6;font-weight:700;}
+
+/* GRID */
+.gallery-section{padding:0 16px;}
+.gallery-section-title{
+  font-size:13px;font-weight:700;color:#888;
+  text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;
+}
+.gal-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+}
+.gal-item{
+  aspect-ratio:1;border-radius:12px;overflow:hidden;
+  position:relative;cursor:pointer;background:#eee;
+}
+.gal-item img{width:100%;height:100%;object-fit:cover;}
+.gal-emoji{
+  width:100%;height:100%;display:flex;align-items:center;
+  justify-content:center;font-size:32px;background:#f5f5f5;
+}
+.gal-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background 0.2s;border-radius:12px;
+}
+.gal-item:hover .gal-overlay,.gal-item:active .gal-overlay{background:rgba(0,0,0,0.45);}
+.gal-action-btn{
+  background:#fff;border:none;border-radius:50%;
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  font-size:15px;cursor:pointer;opacity:0;transition:opacity 0.2s;
+}
+.gal-item:hover .gal-action-btn,.gal-item:active .gal-action-btn{opacity:1;}
+.gal-add-btn{
+  aspect-ratio:1;border-radius:12px;
+  border:2px dashed #FFD700;background:#fffde7;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;gap:6px;
+}
+.gal-add-btn i{font-size:24px;color:#e6b800;}
+.gal-add-btn span{font-size:11px;font-weight:700;color:#e6b800;}
+
+/* MODAL LIGHTBOX */
+.lightbox{
+  position:fixed;inset:0;background:rgba(0,0,0,0.92);
+  z-index:200;display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.lightbox.open{display:flex;}
+.lb-close{
+  position:absolute;top:16px;right:16px;
+  background:rgba(255,255,255,0.15);border:none;color:#fff;
+  width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;
+}
+.lb-content{max-width:90vw;max-height:70vh;border-radius:16px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-size:80px;background:#333;
+  width:300px;height:300px;}
+.lb-nav{display:flex;gap:16px;margin-top:20px;}
+.lb-nav-btn{
+  background:rgba(255,255,255,0.15);border:none;color:#fff;
+  width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;
+}
+.lb-caption{color:#ddd;font-size:13px;margin-top:12px;text-align:center;}
+.lb-actions{display:flex;gap:10px;margin-top:14px;}
+.lb-btn{
+  background:rgba(255,255,255,0.12);color:#fff;border:none;
+  border-radius:10px;padding:8px 18px;font-family:'Poppins',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;
+}
+.lb-btn.danger{background:rgba(230,57,70,0.3);color:#ff6b6b;}
+
+/* UPLOAD AREA */
+.upload-section{padding:16px;}
+.upload-area{
+  border:2px dashed #FFD700;border-radius:16px;
+  padding:24px;text-align:center;background:#fffde7;cursor:pointer;
+}
+.upload-area i{font-size:36px;color:#e6b800;margin-bottom:8px;}
+.upload-area strong{display:block;font-size:15px;font-weight:700;margin-bottom:4px;}
+.upload-area p{font-size:12px;color:#888;}
+.upload-area .formats{
+  display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap;
+}
+.fmt-chip{
+  background:#fff;border:1px solid #eee;border-radius:6px;
+  padding:2px 8px;font-size:10px;font-weight:700;color:#888;
+}
+
+/* DICAS */
+.tips-section{padding:0 16px 100px;}
+.tips-section h3{font-size:14px;font-weight:700;margin-bottom:10px;}
+.tip-item{
+  display:flex;align-items:flex-start;gap:10px;
+  background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+.tip-icon{font-size:20px;flex-shrink:0;}
+.tip-text p{font-size:12px;color:#555;margin-top:2px;line-height:1.5;}
+.tip-text strong{font-size:13px;color:#1a1a1a;}
+</style>
+</head>
+<body>
+
+<div class="gal-header">
+  <div class="gal-header-left">
+    <a href="minha-conta.html" style="color:#1a1a1a;font-size:18px;"><i class="fas fa-arrow-left"></i></a>
+    <h1>Galeria de Trabalhos</h1>
+  </div>
+  <span class="badge badge-pro" style="font-size:12px;padding:4px 12px;">Plano Pró ✓</span>
+</div>
+
+<!-- BARRA DE USO -->
+<div class="usage-bar-wrap">
+  <div class="usage-card">
+    <div class="usage-top">
+      <span class="usage-title">Fotos utilizadas</span>
+      <span class="usage-count">6 / 10</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill"></div></div>
+    <p class="usage-note">Você pode adicionar mais 4 fotos. <a href="planos.html">Upgrade para Premium</a> não altera o limite — Pró e Premium têm 10 fotos.</p>
+  </div>
+</div>
+
+<!-- GALERIA -->
+<div class="gallery-section">
+  <p class="gallery-section-title">Suas fotos</p>
+  <div class="gal-grid" id="galGrid">
+
+    <div class="gal-item" onclick="openLightbox(0)">
+      <div class="gal-emoji">💇</div>
+      <div class="gal-overlay">
+        <button class="gal-action-btn" onclick="event.stopPropagation();openLightbox(0)"><i class="fas fa-eye"></i></button>
+        <button class="gal-action-btn" style="color:#e63946;" onclick="event.stopPropagation();deletePhoto(this)"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div class="gal-item" onclick="openLightbox(1)">
+      <div class="gal-emoji">✂️</div>
+      <div class="gal-overlay">
+        <button class="gal-action-btn"><i class="fas fa-eye"></i></button>
+        <button class="gal-action-btn" style="color:#e63946;" onclick="event.stopPropagation();deletePhoto(this)"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div class="gal-item" onclick="openLightbox(2)">
+      <div class="gal-emoji">💅</div>
+      <div class="gal-overlay">
+        <button class="gal-action-btn"><i class="fas fa-eye"></i></button>
+        <button class="gal-action-btn" style="color:#e63946;" onclick="event.stopPropagation();deletePhoto(this)"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div class="gal-item" onclick="openLightbox(3)">
+      <div class="gal-emoji">🎨</div>
+      <div class="gal-overlay">
+        <button class="gal-action-btn"><i class="fas fa-eye"></i></button>
+        <button class="gal-action-btn" style="color:#e63946;" onclick="event.stopPropagation();deletePhoto(this)"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div class="gal-item" onclick="openLightbox(4)">
+      <div class="gal-emoji">💆</div>
+      <div class="gal-overlay">
+        <button class="gal-action-btn"><i class="fas fa-eye"></i></button>
+        <button class="gal-action-btn" style="color:#e63946;" onclick="event.stopPropagation();deletePhoto(this)"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div class="gal-item" onclick="openLightbox(5)">
+      <div class="gal-emoji">🌟</div>
+      <div class="gal-overlay">
+        <button class="gal-action-btn"><i class="fas fa-eye"></i></button>
+        <button class="gal-action-btn" style="color:#e63946;" onclick="event.stopPropagation();deletePhoto(this)"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+
+    <div class="gal-add-btn" onclick="document.getElementById('fileInput').click()">
+      <i class="fas fa-plus"></i>
+      <span>Adicionar</span>
+    </div>
+
+  </div>
+  <input type="file" id="fileInput" accept="image/*" multiple style="display:none;" onchange="addPhotos(this)"/>
+</div>
+
+<!-- UPLOAD DRAG & DROP -->
+<div class="upload-section">
+  <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+    <i class="fas fa-cloud-upload-alt"></i>
+    <strong>Arraste fotos ou toque para enviar</strong>
+    <p>Mostre a qualidade do seu trabalho para atrair mais clientes</p>
+    <div class="formats">
+      <span class="fmt-chip">JPG</span>
+      <span class="fmt-chip">PNG</span>
+      <span class="fmt-chip">WEBP</span>
+      <span class="fmt-chip">Máx 10MB</span>
+      <span class="fmt-chip">Até 10 fotos</span>
+    </div>
+  </div>
+</div>
+
+<!-- DICAS -->
+<div class="tips-section">
+  <h3>💡 Dicas para uma galeria campeã</h3>
+  <div class="tip-item">
+    <span class="tip-icon">📸</span>
+    <div class="tip-text">
+      <strong>Use fotos com boa iluminação</strong>
+      <p>Fotos claras e nítidas geram até 3x mais contatos do que fotos escuras ou desfocadas.</p>
+    </div>
+  </div>
+  <div class="tip-item">
+    <span class="tip-icon">🏆</span>
+    <div class="tip-text">
+      <strong>Coloque seu melhor trabalho primeiro</strong>
+      <p>A primeira foto é a mais vista. Escolha aquela que representa melhor o que você faz.</p>
+    </div>
+  </div>
+  <div class="tip-item">
+    <span class="tip-icon">🔄</span>
+    <div class="tip-text">
+      <strong>Atualize regularmente</strong>
+      <p>Perfis com fotos novas aparecem com mais frequência nas buscas do TÁNAMÃO.</p>
+    </div>
+  </div>
+  <div class="tip-item">
+    <span class="tip-icon">⚠️</span>
+    <div class="tip-text">
+      <strong>Não use fotos de terceiros</strong>
+      <p>Somente fotos do seu próprio trabalho. Violação gera suspensão do perfil.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+  <div class="lb-content" id="lbContent">💇</div>
+  <div class="lb-caption" id="lbCaption">Foto 1 de 6</div>
+  <div class="lb-nav">
+    <button class="lb-nav-btn" onclick="prevPhoto()"><i class="fas fa-chevron-left"></i></button>
+    <button class="lb-nav-btn" onclick="nextPhoto()"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="lb-actions">
+    <button class="lb-btn"><i class="fas fa-star"></i> Definir como capa</button>
+    <button class="lb-btn danger" onclick="closeLightbox()"><i class="fas fa-trash"></i> Excluir</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a>
+  <a href="busca.html" class="nav-item"><i class="fas fa-search"></i><span>Buscar</span></a>
+  <a href="cadastro.html" class="nav-item nav-center"><i class="fas fa-plus"></i></a>
+  <a href="utilidade.html" class="nav-item"><i class="fas fa-phone-alt"></i><span>Utilidade</span></a>
+  <a href="minha-conta.html" class="nav-item active"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+
+<script>
+const emojis = ['💇','✂️','💅','🎨','💆','🌟'];
+let current = 0;
+
+function openLightbox(i){
+  current = i;
+  document.getElementById('lightbox').classList.add('open');
+  document.getElementById('lbContent').textContent = emojis[i] || '📷';
+  document.getElementById('lbCaption').textContent = `Foto ${i+1} de ${emojis.length}`;
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+function nextPhoto(){ current=(current+1)%emojis.length; openLightbox(current); }
+function prevPhoto(){ current=(current-1+emojis.length)%emojis.length; openLightbox(current); }
+function deletePhoto(btn){
+  if(confirm('Excluir esta foto?')){
+    btn.closest('.gal-item').remove();
+  }
+}
+function addPhotos(input){
+  const files = Array.from(input.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const item = document.createElement('div');
+      item.className = 'gal-item';
+      item.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;"/>
+        <div class="gal-overlay">
+          <button class="gal-action-btn"><i class="fas fa-eye"></i></button>
+          <button class="gal-action-btn" style="color:#e63946;" onclick="event.stopPropagation();deletePhoto(this)"><i class="fas fa-trash"></i></button>
+        </div>`;
+      const grid = document.getElementById('galGrid');
+      const addBtn = grid.querySelector('.gal-add-btn');
+      grid.insertBefore(item, addBtn);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+</script>
+</body>
+</html>

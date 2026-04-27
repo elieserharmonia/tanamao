@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pagamento – TÁNAMÃO</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+.ck-header{
+  background:#1a1a1a;padding:16px;
+  display:flex;align-items:center;gap:12px;
+}
+.ck-header h1{color:#FFD700;font-size:18px;font-weight:800;}
+
+/* RESUMO DO PLANO */
+.plan-summary{
+  background:linear-gradient(135deg,#1a1a1a,#2a2a2a);
+  margin:16px;border-radius:20px;padding:20px;
+  border:1px solid #333;
+}
+.ps-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.ps-plan{color:#FFD700;font-size:22px;font-weight:800;}
+.ps-badge{background:#FFD700;color:#1a1a1a;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;}
+.ps-price{text-align:right;}
+.ps-amount{color:#fff;font-size:28px;font-weight:800;}
+.ps-period{color:#aaa;font-size:13px;}
+.ps-divider{border:none;border-top:1px solid #333;margin:14px 0;}
+.ps-features{display:flex;flex-direction:column;gap:6px;}
+.ps-feat{display:flex;align-items:center;gap:8px;font-size:12px;color:#ccc;}
+.ps-feat i{color:#FFD700;font-size:11px;}
+.ps-total{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid #333;}
+.ps-total-label{color:#888;font-size:13px;}
+.ps-total-val{color:#FFD700;font-size:22px;font-weight:800;}
+
+/* MÉTODO DE PAGAMENTO */
+.method-section{padding:0 16px;}
+.method-section h2{font-size:15px;font-weight:700;margin-bottom:12px;}
+.method-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.method-tab{
+  flex:1;background:#fff;border:2px solid #eee;border-radius:12px;
+  padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;font-family:'Poppins',sans-serif;transition:all 0.2s;
+}
+.method-tab.active{border-color:#FFD700;background:#fffde7;}
+.method-tab i{font-size:22px;}
+.method-tab span{font-size:11px;font-weight:700;color:#555;}
+
+/* CARTÃO */
+.card-form{background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);}
+.card-visual{
+  background:linear-gradient(135deg,#1a1a1a,#333);
+  border-radius:16px;padding:20px;margin-bottom:16px;
+  min-height:150px;position:relative;overflow:hidden;
+}
+.card-visual::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:180px;height:180px;border-radius:50%;
+  background:rgba(255,215,0,0.08);
+}
+.card-visual::after{
+  content:'';position:absolute;bottom:-60px;left:-30px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(255,215,0,0.05);
+}
+.card-chip{font-size:28px;margin-bottom:16px;}
+.card-number-display{color:#fff;font-size:18px;font-weight:700;letter-spacing:4px;margin-bottom:12px;font-family:monospace;}
+.card-bottom{display:flex;justify-content:space-between;align-items:flex-end;}
+.card-label{font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:0.8px;}
+.card-value{color:#fff;font-size:13px;font-weight:700;}
+.card-brand{font-size:28px;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.form-group{margin-bottom:12px;}
+.form-group label{display:block;font-size:11px;font-weight:700;color:#333;margin-bottom:5px;}
+.form-group input{
+  width:100%;border:2px solid #eee;border-radius:10px;
+  padding:11px 14px;font-family:'Poppins',sans-serif;font-size:14px;
+  outline:none;transition:border 0.2s;
+}
+.form-group input:focus{border-color:#FFD700;}
+.save-card-row{display:flex;align-items:center;gap:10px;font-size:13px;color:#555;margin-bottom:14px;}
+.save-card-row input{width:auto;}
+
+/* PIX */
+.pix-section{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,0.07);text-align:center;}
+.pix-qr{
+  width:180px;height:180px;border-radius:16px;
+  background:linear-gradient(135deg,#00b777,#009a66);
+  margin:0 auto 14px;display:flex;align-items:center;justify-content:center;
+  font-size:80px;
+}
+.pix-instructions{font-size:13px;color:#555;line-height:1.7;margin-bottom:14px;}
+.pix-key-box{
+  background:#f5f5f5;border-radius:10px;padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;
+}
+.pix-key{font-size:12px;font-weight:700;color:#333;font-family:monospace;}
+.btn-copy{
+  background:#FFD700;border:none;border-radius:8px;
+  padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;
+  font-family:'Poppins',sans-serif;display:flex;align-items:center;gap:5px;
+}
+.pix-timer{
+  background:#fff8e1;border-radius:10px;padding:10px;
+  font-size:12px;color:#e65c00;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+
+/* BOLETO */
+.boleto-section{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,0.07);text-align:center;}
+.boleto-icon{font-size:60px;margin-bottom:12px;}
+.boleto-note{font-size:13px;color:#555;line-height:1.7;}
+.boleto-warning{
+  background:#fff8e1;border-radius:10px;padding:10px;
+  font-size:11px;color:#f57f17;margin-top:12px;
+  display:flex;align-items:center;gap:8px;text-align:left;
+}
+
+/* SEGURANÇA */
+.security-row{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  padding:14px 16px;flex-wrap:wrap;
+}
+.sec-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#888;font-weight:600;}
+.sec-item i{color:#25a244;}
+
+/* BOTÃO PAGAR */
+.btn-pay{
+  width:calc(100% - 32px);margin:0 16px 16px;
+  background:#FFD700;color:#1a1a1a;border:none;border-radius:16px;
+  padding:18px;font-family:'Poppins',sans-serif;font-size:17px;font-weight:800;
+  cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.4);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.btn-pay:active{transform:scale(0.98);}
+
+/* SUCCESS OVERLAY */
+.success-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.85);
+  z-index:300;display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;
+}
+.success-overlay.show{display:flex;}
+.success-card{
+  background:#fff;border-radius:24px;padding:32px 24px;
+  text-align:center;max-width:340px;width:100%;
+}
+.success-icon{font-size:64px;margin-bottom:12px;}
+.success-title{font-size:22px;font-weight:800;margin-bottom:6px;}
+.success-sub{font-size:13px;color:#666;margin-bottom:20px;line-height:1.6;}
+.btn-success{
+  width:100%;background:#FFD700;color:#1a1a1a;border:none;
+  border-radius:14px;padding:15px;font-family:'Poppins',sans-serif;
+  font-size:15px;font-weight:800;cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="ck-header">
+  <a href="planos.html" style="color:#FFD700;font-size:18px;"><i class="fas fa-arrow-left"></i></a>
+  <h1>Finalizar Assinatura</h1>
+</div>
+
+<!-- RESUMO -->
+<div class="plan-summary">
+  <div class="ps-top">
+    <div>
+      <div style="color:#aaa;font-size:12px;margin-bottom:4px;">Você está assinando</div>
+      <div class="ps-plan">Plano Pró</div>
+    </div>
+    <div class="ps-price">
+      <div class="ps-amount">R$29,90</div>
+      <div class="ps-period">/mês</div>
+    </div>
+  </div>
+  <hr class="ps-divider"/>
+  <div class="ps-features">
+    <div class="ps-feat"><i class="fas fa-check"></i> Galeria de até 10 fotos de trabalhos</div>
+    <div class="ps-feat"><i class="fas fa-check"></i> Avaliações de clientes</div>
+    <div class="ps-feat"><i class="fas fa-check"></i> Todos os contatos e redes sociais</div>
+    <div class="ps-feat"><i class="fas fa-check"></i> Selo "Verificado" no perfil</div>
+  </div>
+  <div class="ps-total">
+    <span class="ps-total-label">Total hoje</span>
+    <span class="ps-total-val">R$ 29,90</span>
+  </div>
+</div>
+
+<!-- MÉTODO -->
+<div class="method-section">
+  <h2>Forma de pagamento</h2>
+  <div class="method-tabs">
+    <button class="method-tab active" onclick="setMethod('cartao',this)">
+      <i class="fas fa-credit-card" style="color:#0077b6;"></i>
+      <span>Cartão</span>
+    </button>
+    <button class="method-tab" onclick="setMethod('pix',this)">
+      <i class="fas fa-qrcode" style="color:#00b777;"></i>
+      <span>Pix</span>
+    </button>
+    <button class="method-tab" onclick="setMethod('boleto',this)">
+      <i class="fas fa-barcode" style="color:#555;"></i>
+      <span>Boleto</span>
+    </button>
+  </div>
+
+  <!-- CARTÃO FORM -->
+  <div id="formCartao" class="card-form">
+    <div class="card-visual">
+      <div class="card-chip">💳</div>
+      <div class="card-number-display" id="cardDisplay">•••• •••• •••• ••••</div>
+      <div class="card-bottom">
+        <div>
+          <div class="card-label">Titular</div>
+          <div class="card-value" id="cardName">SEU NOME</div>
+        </div>
+        <div>
+          <div class="card-label">Validade</div>
+          <div class="card-value" id="cardExp">••/••</div>
+        </div>
+        <div class="card-brand" id="cardBrand">💳</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Número do cartão</label>
+      <input type="text" placeholder="0000 0000 0000 0000" maxlength="19"
+        oninput="formatCard(this)" id="cardNum"/>
+    </div>
+    <div class="form-group">
+      <label>Nome no cartão</label>
+      <input type="text" placeholder="NOME COMO NO CARTÃO"
+        oninput="document.getElementById('cardName').textContent=this.value.toUpperCase()||'SEU NOME'" id="cardNameInput"/>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Validade</label>
+        <input type="text" placeholder="MM/AA" maxlength="5"
+          oninput="formatExp(this)" id="cardExpInput"/>
+      </div>
+      <div class="form-group">
+        <label>CVV</label>
+        <input type="text" placeholder="•••" maxlength="4" id="cardCvv"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>CPF do titular</label>
+      <input type="text" placeholder="000.000.000-00" maxlength="14" oninput="formatCpf(this)"/>
+    </div>
+    <label class="save-card-row">
+      <input type="checkbox" checked/> Salvar cartão para próximas cobranças
+    </label>
+  </div>
+
+  <!-- PIX -->
+  <div id="formPix" class="pix-section" style="display:none;">
+    <div class="pix-qr">📱</div>
+    <p class="pix-instructions">
+      Escaneie o QR Code com seu app de banco ou copie a chave Pix abaixo.<br>
+      O pagamento é processado em <strong>até 1 minuto</strong>.
+    </p>
+    <div class="pix-key-box">
+      <span class="pix-key">00020126580014br.gov.bcb.pix...</span>
+      <button class="btn-copy" onclick="copiarPix()"><i class="fas fa-copy"></i> Copiar</button>
+    </div>
+    <div class="pix-timer"><i class="fas fa-clock"></i> QR Code expira em <span id="timer">14:59</span></div>
+  </div>
+
+  <!-- BOLETO -->
+  <div id="formBoleto" class="boleto-section" style="display:none;">
+    <div class="boleto-icon">🧾</div>
+    <p class="boleto-note">
+      Clique em "Gerar Boleto" para criar seu boleto bancário.<br>
+      O acesso ao plano é liberado após a <strong>confirmação do pagamento</strong> (1–3 dias úteis).
+    </p>
+    <div class="boleto-warning">
+      <i class="fas fa-exclamation-triangle" style="font-size:18px;flex-shrink:0;"></i>
+      <span>Boleto disponível apenas no plano anual. Para mensalidade, use cartão ou Pix.</span>
+    </div>
+  </div>
+</div>
+
+<!-- SEGURANÇA -->
+<div class="security-row">
+  <div class="sec-item"><i class="fas fa-lock"></i> SSL 256-bit</div>
+  <div class="sec-item"><i class="fas fa-shield-alt"></i> Pagar.me</div>
+  <div class="sec-item"><i class="fas fa-undo"></i> Garantia 7 dias</div>
+  <div class="sec-item"><i class="fas fa-ban"></i> Sem fidelidade</div>
+</div>
+
+<div style="height:20px;"></div>
+<button class="btn-pay" onclick="processarPagamento()">
+  <i class="fas fa-lock"></i> Pagar R$ 29,90 com segurança
+</button>
+<p style="text-align:center;font-size:11px;color:#aaa;margin:0 16px 80px;">
+  Ao assinar você concorda com os Termos de Uso do TÁNAMÃO. Cancele quando quiser.
+</p>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">Pagamento aprovado!</div>
+    <p class="success-sub">Seu plano <strong>Pró</strong> foi ativado com sucesso. Agora você pode adicionar sua galeria de trabalhos e receber avaliações!</p>
+    <button class="btn-success" onclick="window.location='minha-conta.html'">Ir para Minha Conta →</button>
+  </div>
+</div>
+
+<script>
+function setMethod(m, el){
+  document.querySelectorAll('.method-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('formCartao').style.display = m==='cartao'?'block':'none';
+  document.getElementById('formPix').style.display = m==='pix'?'block':'none';
+  document.getElementById('formBoleto').style.display = m==='boleto'?'block':'none';
+  const btn = document.querySelector('.btn-pay');
+  if(m==='pix') btn.innerHTML='<i class="fas fa-qrcode"></i> Confirmar pagamento via Pix';
+  else if(m==='boleto') btn.innerHTML='<i class="fas fa-barcode"></i> Gerar Boleto';
+  else btn.innerHTML='<i class="fas fa-lock"></i> Pagar R$ 29,90 com segurança';
+}
+
+function formatCard(el){
+  let v = el.value.replace(/\D/g,'').substring(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+  const disp = v.padEnd(16,'•');
+  document.getElementById('cardDisplay').textContent =
+    disp.substring(0,4)+' '+disp.substring(4,8)+' '+disp.substring(8,12)+' '+disp.substring(12,16);
+  const brands = {'4':'💳 Visa','5':'💳 Master','3':'💳 Amex','6':'💳 Elo'};
+  document.getElementById('cardBrand').textContent = brands[v[0]] || '💳';
+}
+function formatExp(el){
+  let v = el.value.replace(/\D/g,'');
+  if(v.length>=2) v = v.substring(0,2)+'/'+v.substring(2,4);
+  el.value = v;
+  document.getElementById('cardExp').textContent = el.value || '••/••';
+}
+function formatCpf(el){
+  let v = el.value.replace(/\D/g,'').substring(0,11);
+  v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1-$2');
+  el.value = v;
+}
+
+let timerSec = 899;
+function updateTimer(){
+  timerSec--;
+  if(timerSec<=0){ document.getElementById('timer').textContent='Expirado'; return; }
+  const m=Math.floor(timerSec/60), s=timerSec%60;
+  document.getElementById('timer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  setTimeout(updateTimer,1000);
+}
+updateTimer();
+
+function copiarPix(){
+  alert('Chave Pix copiada! Cole no seu app de banco.');
+}
+
+function processarPagamento(){
+  document.getElementById('successOverlay').classList.add('show');
+}
+</script>
+</body>
+</html>

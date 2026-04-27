@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Utilidade Pública – TÁNAMÃO</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+.util-header {
+  background: #e63946; padding: 16px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 100;
+}
+.util-header .back-btn {
+  color: #fff; font-size: 18px;
+}
+.util-header h1 { color: #fff; font-size: 18px; font-weight: 800; }
+.util-header p { color: rgba(255,255,255,0.8); font-size: 11px; margin-top: 1px; }
+
+.util-section { padding: 14px 16px 0; }
+.util-section-title {
+  font-size: 13px; font-weight: 700; color: #888;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.util-card {
+  background: #fff; border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.util-icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.icon-red { background: #ffecec; }
+.icon-blue { background: #e8f4ff; }
+.icon-green { background: #e8f5e9; }
+.icon-orange { background: #fff3e0; }
+.icon-purple { background: #f3e5f5; }
+.util-info { flex: 1; }
+.util-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.util-detail { font-size: 11px; color: #666; line-height: 1.6; }
+.util-detail i { width: 14px; color: #999; }
+.util-actions { display: flex; gap: 6px; margin-top: 10px; }
+.btn-ligar {
+  flex: 1; background: #e63946; color: #fff;
+  border: none; border-radius: 8px; padding: 8px;
+  font-family: 'Poppins',sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;
+}
+.btn-wp-util {
+  background: #25D366; color: #fff;
+  border: none; border-radius: 8px; padding: 8px 12px;
+  font-size: 16px; cursor: pointer;
+}
+.btn-mapa {
+  background: #f5f5f5; color: #333;
+  border: none; border-radius: 8px; padding: 8px 12px;
+  font-size: 14px; cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="util-header">
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+  <div>
+    <h1>Utilidade Pública</h1>
+    <p>Pederneiras – SP • Atualizado em Abr/2026</p>
+  </div>
+</div>
+
+<!-- EMERGÊNCIAS -->
+<div class="util-section">
+  <div class="util-section-title"><i class="fas fa-exclamation-triangle" style="color:#e63946"></i> Emergências</div>
+
+  <div class="util-card">
+    <div class="util-icon icon-red">🚑</div>
+    <div class="util-info">
+      <div class="util-name">SAMU</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> <strong>192</strong> (gratuito, 24h)</div>
+        <div><i class="fas fa-clock"></i> Funcionamento: 24 horas</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar" onclick="window.location='tel:192'"><i class="fas fa-phone"></i> Ligar Agora</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="util-card">
+    <div class="util-icon icon-red">🚒</div>
+    <div class="util-info">
+      <div class="util-name">Bombeiros</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> <strong>193</strong> (gratuito, 24h)</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar" onclick="window.location='tel:193'"><i class="fas fa-phone"></i> Ligar Agora</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="util-card">
+    <div class="util-icon icon-red">🚔</div>
+    <div class="util-info">
+      <div class="util-name">Polícia Militar</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> <strong>190</strong> (gratuito, 24h)</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar" onclick="window.location='tel:190'"><i class="fas fa-phone"></i> Ligar Agora</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAÚDE -->
+<div class="util-section">
+  <div class="util-section-title"><i class="fas fa-heartbeat" style="color:#e63946"></i> Saúde</div>
+
+  <div class="util-card">
+    <div class="util-icon icon-green">🏥</div>
+    <div class="util-info">
+      <div class="util-name">Hospital Municipal</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> (14) 3282-0000</div>
+        <div><i class="fas fa-map-marker-alt"></i> Av. Brasil, 500 – Centro</div>
+        <div><i class="fas fa-clock"></i> 24 horas – Pronto-socorro</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar" onclick="window.location='tel:1432820000'"><i class="fas fa-phone"></i> Ligar</button>
+        <button class="btn-mapa"><i class="fas fa-map"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="util-card">
+    <div class="util-icon icon-green">🩺</div>
+    <div class="util-info">
+      <div class="util-name">UBS – Unidade Básica de Saúde</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> (14) 3282-1111</div>
+        <div><i class="fas fa-map-marker-alt"></i> Rua XV de Novembro, 200</div>
+        <div><i class="fas fa-clock"></i> Seg a Sex: 07h–17h</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar" onclick="window.location='tel:1432821111'"><i class="fas fa-phone"></i> Ligar</button>
+        <button class="btn-mapa"><i class="fas fa-map"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSPORTE -->
+<div class="util-section">
+  <div class="util-section-title"><i class="fas fa-bus" style="color:#0077b6"></i> Transporte</div>
+
+  <div class="util-card">
+    <div class="util-icon icon-blue">🚌</div>
+    <div class="util-info">
+      <div class="util-name">Rodoviária de Pederneiras</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> (14) 3282-2222</div>
+        <div><i class="fas fa-map-marker-alt"></i> Praça Rui Barbosa, s/n</div>
+        <div><i class="fas fa-clock"></i> 05h–23h (diariamente)</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar" onclick="window.location='tel:1432822222'"><i class="fas fa-phone"></i> Ligar</button>
+        <button class="btn-mapa"><i class="fas fa-map"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="util-card">
+    <div class="util-icon icon-blue">🚕</div>
+    <div class="util-info">
+      <div class="util-name">Ponto de Táxi Central</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> (14) 99999-0000</div>
+        <div><i class="fas fa-clock"></i> 24 horas</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar"><i class="fas fa-phone"></i> Ligar</button>
+        <button class="btn-wp-util"><i class="fab fa-whatsapp"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVIÇOS PÚBLICOS -->
+<div class="util-section" style="padding-bottom:100px;">
+  <div class="util-section-title"><i class="fas fa-landmark" style="color:#6a0dad"></i> Serviços Públicos</div>
+
+  <div class="util-card">
+    <div class="util-icon icon-purple">🏛️</div>
+    <div class="util-info">
+      <div class="util-name">Prefeitura Municipal</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> (14) 3282-3000</div>
+        <div><i class="fas fa-map-marker-alt"></i> Praça Dr. Castilho, 100</div>
+        <div><i class="fas fa-clock"></i> Seg a Sex: 08h–17h</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar"><i class="fas fa-phone"></i> Ligar</button>
+        <button class="btn-mapa"><i class="fas fa-map"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="util-card">
+    <div class="util-icon icon-orange">📋</div>
+    <div class="util-info">
+      <div class="util-name">CRAS – Assistência Social</div>
+      <div class="util-detail">
+        <div><i class="fas fa-phone"></i> (14) 3282-4000</div>
+        <div><i class="fas fa-clock"></i> Seg a Sex: 08h–17h</div>
+      </div>
+      <div class="util-actions">
+        <button class="btn-ligar"><i class="fas fa-phone"></i> Ligar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a>
+  <a href="busca.html" class="nav-item"><i class="fas fa-search"></i><span>Buscar</span></a>
+  <a href="cadastro.html" class="nav-item nav-center"><i class="fas fa-plus"></i></a>
+  <a href="utilidade.html" class="nav-item active"><i class="fas fa-phone-alt"></i><span>Utilidade</span></a>
+  <a href="minha-conta.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Anunciar Serviço – TÁNAMÃO</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+.cad-header {
+  background: #FFD700; padding: 16px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.cad-header h1 { font-size: 18px; font-weight: 800; color: #1a1a1a; }
+
+/* PLANOS */
+.plans-section { padding: 20px 16px 0; }
+.plans-section h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.plans-section p { font-size: 12px; color: #666; margin-bottom: 14px; }
+.plans-grid { display: flex; flex-direction: column; gap: 12px; }
+.plan-card {
+  border: 2px solid #eee; border-radius: 16px; padding: 16px;
+  cursor: pointer; transition: all 0.2s; position: relative;
+}
+.plan-card.selected { border-color: #FFD700; background: #fffde7; }
+.plan-card.popular { border-color: #0077b6; }
+.plan-popular-badge {
+  position: absolute; top: -10px; right: 16px;
+  background: #0077b6; color: #fff;
+  font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px;
+}
+.plan-name { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
+.plan-price { font-size: 22px; font-weight: 800; color: #1a1a1a; margin-bottom: 8px; }
+.plan-price span { font-size: 13px; font-weight: 400; color: #888; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.plan-features li { font-size: 12px; color: #555; display: flex; align-items: center; gap: 6px; }
+.plan-features li i { font-size: 11px; }
+.feat-ok { color: #2e7d32; }
+.feat-no { color: #ccc; }
+
+/* FORM */
+.form-section { padding: 20px 16px; }
+.form-section h2 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 5px; color: #333; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; border: 2px solid #eee; border-radius: 10px;
+  padding: 11px 14px; font-family: 'Poppins',sans-serif; font-size: 13px;
+  outline: none; transition: border 0.2s; color: #1a1a1a;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: #FFD700;
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.required-note { font-size: 10px; color: #e63946; margin-left: 4px; }
+
+.upload-area {
+  border: 2px dashed #FFD700; border-radius: 12px;
+  padding: 20px; text-align: center; cursor: pointer;
+  background: #fffde7;
+}
+.upload-area i { font-size: 28px; color: #FFD700; margin-bottom: 6px; }
+.upload-area p { font-size: 12px; color: #666; }
+.upload-area strong { font-size: 13px; color: #1a1a1a; }
+
+.btn-submit {
+  width: 100%; background: #FFD700; color: #1a1a1a;
+  border: none; border-radius: 14px; padding: 16px;
+  font-family: 'Poppins',sans-serif; font-size: 16px; font-weight: 800;
+  cursor: pointer; margin-top: 10px;
+  box-shadow: 0 4px 14px rgba(255,215,0,0.4);
+}
+</style>
+</head>
+<body>
+
+<div class="cad-header">
+  <a href="index.html" style="color:#1a1a1a; font-size:18px;"><i class="fas fa-arrow-left"></i></a>
+  <h1>Anunciar Serviço</h1>
+</div>
+
+<div class="plans-section">
+  <h2>Escolha seu plano</h2>
+  <p>Comece grátis. Faça upgrade quando quiser.</p>
+  <div class="plans-grid">
+
+    <div class="plan-card selected" onclick="selectPlan(this)">
+      <div class="plan-name">Free</div>
+      <div class="plan-price">R$ 0 <span>/mês</span></div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check feat-ok"></i> Perfil básico + bio</li>
+        <li><i class="fas fa-check feat-ok"></i> Foto de perfil</li>
+        <li><i class="fas fa-check feat-ok"></i> WhatsApp e telefone</li>
+        <li><i class="fas fa-times feat-no"></i> Galeria de trabalhos</li>
+        <li><i class="fas fa-times feat-no"></i> Avaliações de clientes</li>
+        <li><i class="fas fa-times feat-no"></i> Destaque nas buscas</li>
+      </ul>
+    </div>
+
+    <div class="plan-card popular" onclick="selectPlan(this)">
+      <div class="plan-popular-badge">Mais Popular</div>
+      <div class="plan-name" style="color:#0077b6">Pró</div>
+      <div class="plan-price">R$ 29,90 <span>/mês</span></div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check feat-ok"></i> Tudo do Free</li>
+        <li><i class="fas fa-check feat-ok"></i> Galeria (até 10 fotos)</li>
+        <li><i class="fas fa-check feat-ok"></i> Avaliações de clientes</li>
+        <li><i class="fas fa-check feat-ok"></i> Todos os contatos sociais</li>
+        <li><i class="fas fa-check feat-ok"></i> Selo "Verificado"</li>
+        <li><i class="fas fa-times feat-no"></i> Destaque premium nas buscas</li>
+      </ul>
+    </div>
+
+    <div class="plan-card" onclick="selectPlan(this)">
+      <div class="plan-name" style="color:#e65c00">Premium</div>
+      <div class="plan-price">R$ 79,90 <span>/mês</span></div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check feat-ok"></i> Tudo do Pró</li>
+        <li><i class="fas fa-check feat-ok"></i> Topo dos resultados de busca</li>
+        <li><i class="fas fa-check feat-ok"></i> Banner na tela inicial</li>
+        <li><i class="fas fa-check feat-ok"></i> Destaque em categoria</li>
+        <li><i class="fas fa-check feat-ok"></i> Suporte prioritário</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<div class="form-section">
+  <h2>Seus dados profissionais</h2>
+
+  <div class="form-group">
+    <label>Foto de Perfil <span class="required-note">* obrigatório</span></label>
+    <div class="upload-area">
+      <i class="fas fa-user-circle"></i>
+      <strong>Enviar foto com rosto visível</strong>
+      <p>JPG ou PNG • Máx 5MB • Foto real para verificação</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Foto de Capa (trabalho realizado)</label>
+    <div class="upload-area">
+      <i class="fas fa-image"></i>
+      <strong>Adicionar foto de capa</strong>
+      <p>Mostre seu melhor trabalho!</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Nome completo / Nome do negócio <span class="required-note">*</span></label>
+    <input type="text" placeholder="Ex: João Silva Elétrica"/>
+  </div>
+
+  <div class="form-group">
+    <label>Categoria do serviço <span class="required-note">*</span></label>
+    <select>
+      <option value="">Selecione uma categoria...</option>
+      <option>Elétrica</option><option>Hidráulica</option><option>Beleza</option>
+      <option>Saúde</option><option>Reforma</option><option>Aulas</option>
+      <option>Informática</option><option>Advocacia</option><option>Contabilidade</option>
+      <option>Automotivo</option><option>Fotografia</option><option>Outra</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Bio / Descrição dos serviços <span class="required-note">*</span></label>
+    <textarea placeholder="Conte um pouco sobre você e os serviços que oferece. Seja direto e objetivo!"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>WhatsApp <span class="required-note">*</span></label>
+    <input type="tel" placeholder="(14) 99999-0000"/>
+  </div>
+
+  <div class="form-group">
+    <label>Telefone</label>
+    <input type="tel" placeholder="(14) 3282-0000"/>
+  </div>
+
+  <div class="form-group">
+    <label>E-mail</label>
+    <input type="email" placeholder="seu@email.com"/>
+  </div>
+
+  <div class="form-group">
+    <label>Instagram</label>
+    <input type="text" placeholder="@seu_perfil"/>
+  </div>
+
+  <div class="form-group">
+    <label>Endereço / Cidade de atuação</label>
+    <input type="text" placeholder="Pederneiras – SP"/>
+  </div>
+
+  <button class="btn-submit">🚀 Publicar meu Perfil</button>
+  <p style="text-align:center;font-size:11px;color:#888;margin-top:10px;">
+    Ao publicar, você concorda com os Termos de Uso do TÁNAMÃO.
+  </p>
+</div>
+
+<script>
+function selectPlan(el) {
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+
+</body>
+</html>

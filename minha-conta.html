@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Minha Conta – TÁNAMÃO</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+.mc-header { background: #FFD700; padding: 16px 16px 0; }
+.mc-header h1 { font-size: 18px; font-weight: 800; color: #1a1a1a; margin-bottom: 16px; }
+
+.mc-profile-card {
+  background: #1a1a1a; margin: 0 16px 0;
+  border-radius: 20px; padding: 20px;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  position: relative; overflow: hidden;
+}
+.mc-profile-card::after {
+  content: ''; position: absolute; right: -20px; top: -20px;
+  width: 100px; height: 100px; border-radius: 50%;
+  background: rgba(255,215,0,0.1);
+}
+.mc-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #FFD700; color: #1a1a1a;
+  font-size: 22px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  border: 3px solid #FFD700; flex-shrink: 0;
+}
+.mc-info { flex: 1; }
+.mc-info h2 { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.mc-info p { color: #aaa; font-size: 12px; }
+.mc-plan-tag {
+  background: #FFD700; color: #1a1a1a;
+  font-size: 11px; font-weight: 800; padding: 4px 12px;
+  border-radius: 20px; margin-top: 6px; display: inline-block;
+}
+.mc-edit-btn {
+  background: rgba(255,255,255,0.1); border: none; border-radius: 10px;
+  padding: 8px 14px; color: #fff; font-size: 12px; font-weight: 700;
+  font-family: 'Poppins',sans-serif; cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* STATS */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 10px; padding: 16px 16px 0;
+}
+.stat-card {
+  background: #fff; border-radius: 14px; padding: 14px 10px;
+  text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+.stat-value { font-size: 24px; font-weight: 800; color: #1a1a1a; }
+.stat-label { font-size: 10px; color: #888; font-weight: 600; margin-top: 2px; }
+.stat-icon { font-size: 18px; margin-bottom: 4px; }
+
+/* PLANO ATUAL */
+.plano-section { padding: 16px; }
+.plano-section h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.plano-card {
+  background: #fff; border-radius: 16px; padding: 16px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  border: 2px solid #FFD700;
+}
+.plano-row { display: flex; justify-content: space-between; align-items: center; }
+.plano-name { font-size: 18px; font-weight: 800; }
+.plano-price { font-size: 22px; font-weight: 800; color: #e65c00; }
+.plano-price span { font-size: 13px; color: #888; font-weight: 400; }
+.plano-renewal { font-size: 11px; color: #888; margin: 6px 0 14px; }
+.plano-features-mini { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.feat-chip {
+  background: #f5f5f5; border-radius: 20px; padding: 4px 10px;
+  font-size: 11px; font-weight: 600; color: #444;
+  display: flex; align-items: center; gap: 4px;
+}
+.feat-chip i { color: #25a244; font-size: 10px; }
+.btn-upgrade {
+  width: 100%; background: #1a1a1a; color: #FFD700;
+  border: none; border-radius: 12px; padding: 13px;
+  font-family: 'Poppins',sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+/* MENU ITENS */
+.menu-section { padding: 0 16px 16px; }
+.menu-section h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.menu-item {
+  background: #fff; border-radius: 14px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.menu-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.mi-yellow { background: #fffde7; }
+.mi-blue { background: #e8f4ff; }
+.mi-green { background: #e8f5e9; }
+.mi-red { background: #ffecec; }
+.mi-gray { background: #f5f5f5; }
+.mi-orange { background: #fff3e0; }
+.menu-item-text { flex: 1; }
+.menu-item-title { font-size: 14px; font-weight: 600; }
+.menu-item-sub { font-size: 11px; color: #888; margin-top: 1px; }
+.menu-item-arrow { color: #ccc; font-size: 14px; }
+.menu-item-badge {
+  background: #e63946; color: #fff; border-radius: 20px;
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+}
+
+/* SAIR */
+.btn-sair {
+  width: calc(100% - 32px); margin: 0 16px 16px;
+  background: #fff; color: #e63946;
+  border: 2px solid #e63946; border-radius: 14px; padding: 13px;
+  font-family: 'Poppins',sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="mc-header">
+  <h1>Minha Conta</h1>
+</div>
+
+<div style="background:#FFD700; padding: 0 0 24px;">
+  <div class="mc-profile-card">
+    <div class="mc-avatar">MA</div>
+    <div class="mc-info">
+      <h2>Maria Andrade</h2>
+      <p>Cabeleireira • Pederneiras-SP</p>
+      <span class="mc-plan-tag">⭐ Plano Premium</span>
+    </div>
+    <button class="mc-edit-btn" onclick="window.location='editar-perfil.html'">
+      <i class="fas fa-pen"></i> Editar
+    </button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-icon">👁️</div>
+    <div class="stat-value">1.2k</div>
+    <div class="stat-label">Visualizações</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📞</div>
+    <div class="stat-value">87</div>
+    <div class="stat-label">Contatos</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">⭐</div>
+    <div class="stat-value">4.9</div>
+    <div class="stat-label">Avaliação</div>
+  </div>
+</div>
+
+<!-- PLANO -->
+<div class="plano-section">
+  <h3>Seu Plano</h3>
+  <div class="plano-card">
+    <div class="plano-row">
+      <span class="plano-name">⭐ Premium</span>
+      <span class="plano-price">R$79,90<span>/mês</span></span>
+    </div>
+    <p class="plano-renewal"><i class="fas fa-sync-alt"></i> Renova em 15/05/2026 • Cartão •••• 4321</p>
+    <div class="plano-features-mini">
+      <span class="feat-chip"><i class="fas fa-check"></i> Topo das buscas</span>
+      <span class="feat-chip"><i class="fas fa-check"></i> Banner na Home</span>
+      <span class="feat-chip"><i class="fas fa-check"></i> Galeria 10 fotos</span>
+      <span class="feat-chip"><i class="fas fa-check"></i> Avaliações</span>
+      <span class="feat-chip"><i class="fas fa-check"></i> Verificado</span>
+    </div>
+    <button class="btn-upgrade" onclick="window.location='planos.html'">
+      <i class="fas fa-crown"></i> Gerenciar Assinatura
+    </button>
+  </div>
+</div>
+
+<!-- MENU -->
+<div class="menu-section">
+  <h3>Gerenciar Perfil</h3>
+
+  <a href="editar-perfil.html" class="menu-item">
+    <div class="menu-icon mi-yellow"><i class="fas fa-user-edit" style="color:#e6b800"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Editar Perfil</div>
+      <div class="menu-item-sub">Bio, contatos, foto e capa</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+
+  <a href="galeria.html" class="menu-item">
+    <div class="menu-icon mi-blue"><i class="fas fa-images" style="color:#0077b6"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Galeria de Trabalhos</div>
+      <div class="menu-item-sub">6 de 10 fotos utilizadas</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+
+  <a href="avaliacoes.html" class="menu-item">
+    <div class="menu-icon mi-yellow"><i class="fas fa-star" style="color:#FFD700"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Avaliações</div>
+      <div class="menu-item-sub">38 avaliações • 4.9 ★</div>
+    </div>
+    <span class="menu-item-badge">2 novas</span>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+
+  <a href="estatisticas.html" class="menu-item">
+    <div class="menu-icon mi-green"><i class="fas fa-chart-line" style="color:#25a244"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Estatísticas</div>
+      <div class="menu-item-sub">Visualizações, cliques, contatos</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+</div>
+
+<div class="menu-section">
+  <h3>Conta e Pagamentos</h3>
+
+  <a href="planos.html" class="menu-item">
+    <div class="menu-icon mi-orange"><i class="fas fa-crown" style="color:#e65c00"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Meu Plano</div>
+      <div class="menu-item-sub">Premium • Renova em 15/05</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+
+  <a href="pagamentos.html" class="menu-item">
+    <div class="menu-icon mi-blue"><i class="fas fa-credit-card" style="color:#0077b6"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Pagamentos</div>
+      <div class="menu-item-sub">Histórico e formas de pagamento</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+
+  <a href="impulsionar.html" class="menu-item">
+    <div class="menu-icon mi-yellow"><i class="fas fa-rocket" style="color:#e6b800"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Impulsionar Perfil</div>
+      <div class="menu-item-sub">Destaque avulso por 7 dias – R$9,90</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+</div>
+
+<div class="menu-section">
+  <h3>Suporte</h3>
+  <a href="ajuda.html" class="menu-item">
+    <div class="menu-icon mi-gray"><i class="fas fa-question-circle" style="color:#888"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Central de Ajuda</div>
+      <div class="menu-item-sub">Dúvidas frequentes e tutoriais</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+  <a href="#" class="menu-item">
+    <div class="menu-icon mi-green"><i class="fab fa-whatsapp" style="color:#25D366"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Falar com Suporte</div>
+      <div class="menu-item-sub">Atendimento via WhatsApp</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+  <a href="denunciar.html" class="menu-item">
+    <div class="menu-icon mi-red"><i class="fas fa-flag" style="color:#e63946"></i></div>
+    <div class="menu-item-text">
+      <div class="menu-item-title">Termos e Privacidade</div>
+      <div class="menu-item-sub">Políticas do TÁNAMÃO</div>
+    </div>
+    <i class="fas fa-chevron-right menu-item-arrow"></i>
+  </a>
+</div>
+
+<button class="btn-sair" onclick="window.location='login.html'">
+  <i class="fas fa-sign-out-alt"></i> Sair da Conta
+</button>
+
+<div style="height:80px;"></div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a>
+  <a href="busca.html" class="nav-item"><i class="fas fa-search"></i><span>Buscar</span></a>
+  <a href="cadastro.html" class="nav-item nav-center"><i class="fas fa-plus"></i></a>
+  <a href="utilidade.html" class="nav-item"><i class="fas fa-phone-alt"></i><span>Utilidade</span></a>
+  <a href="minha-conta.html" class="nav-item active"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+
+</body>
+</html>

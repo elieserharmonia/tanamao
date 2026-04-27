@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin – TÁNAMÃO</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:#f0f2f5;color:#1a1a1a;display:flex;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+
+/* SIDEBAR */
+.sidebar{
+  width:240px; background:#1a1a1a; min-height:100vh;
+  display:flex; flex-direction:column;
+  position:fixed; left:0; top:0; bottom:0; z-index:100;
+  transition:width 0.3s;
+}
+.sidebar-logo{
+  padding:20px 18px; border-bottom:1px solid #333;
+  display:flex; align-items:center; gap:10px;
+}
+.sidebar-logo .logo-text{font-size:20px;font-weight:800;color:#FFD700;}
+.sidebar-logo .logo-text span{color:#e65c00;}
+.sidebar-logo .logo-icon{font-size:24px;}
+.sidebar-nav{flex:1;padding:16px 0;}
+.nav-group-label{
+  font-size:10px;font-weight:700;color:#666;text-transform:uppercase;
+  letter-spacing:0.8px;padding:10px 18px 4px;
+}
+.sidebar-link{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 18px;font-size:13px;font-weight:600;color:#aaa;
+  transition:all 0.2s;cursor:pointer;
+}
+.sidebar-link:hover,.sidebar-link.active{background:#2a2a2a;color:#FFD700;}
+.sidebar-link i{width:18px;text-align:center;font-size:15px;}
+.sidebar-badge{
+  margin-left:auto;background:#e63946;color:#fff;
+  border-radius:20px;font-size:10px;font-weight:700;padding:1px 7px;
+}
+.sidebar-footer{padding:16px 18px;border-top:1px solid #333;}
+.sidebar-user{display:flex;align-items:center;gap:10px;}
+.sidebar-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:#FFD700;color:#1a1a1a;font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.sidebar-user-info .name{font-size:12px;font-weight:700;color:#fff;}
+.sidebar-user-info .role{font-size:10px;color:#666;}
+
+/* MAIN */
+.main{margin-left:240px;flex:1;padding:0;}
+.topbar{
+  background:#fff;padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid #eee;position:sticky;top:0;z-index:50;
+}
+.topbar h1{font-size:18px;font-weight:800;}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.topbar-notif{
+  width:38px;height:38px;border-radius:10px;background:#f5f5f5;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  position:relative;
+}
+.notif-dot{
+  position:absolute;top:6px;right:6px;width:8px;height:8px;
+  background:#e63946;border-radius:50%;border:2px solid #fff;
+}
+.topbar-avatar{
+  width:38px;height:38px;border-radius:50%;background:#FFD700;color:#1a1a1a;
+  font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+
+/* CONTENT */
+.content{padding:24px;}
+.page-title{font-size:22px;font-weight:800;margin-bottom:4px;}
+.page-sub{font-size:13px;color:#888;margin-bottom:20px;}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.kpi-card{
+  background:#fff;border-radius:16px;padding:18px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.07);
+}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.kpi-icon-box{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.kpi-delta-pill{
+  font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;
+}
+.delta-green{background:#e8f5e9;color:#25a244;}
+.delta-red{background:#ffecec;color:#e63946;}
+.kpi-value{font-size:28px;font-weight:800;color:#1a1a1a;}
+.kpi-label{font-size:12px;color:#888;font-weight:600;margin-top:2px;}
+
+/* CHARTS ROW */
+.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:24px;}
+.chart-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,0.07);}
+.chart-card h3{font-size:14px;font-weight:700;margin-bottom:14px;}
+.chart-wrap{height:200px;}
+
+/* TABLES */
+.tables-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.table-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,0.07);}
+.table-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.table-card-header h3{font-size:14px;font-weight:700;}
+.btn-ver-todos{
+  font-size:12px;font-weight:600;color:#FFD700;
+  background:transparent;border:none;cursor:pointer;font-family:'Poppins',sans-serif;
+}
+table{width:100%;border-collapse:collapse;}
+th{font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;
+   letter-spacing:0.5px;padding:0 8px 10px;text-align:left;}
+td{font-size:12px;padding:10px 8px;border-top:1px solid #f5f5f5;vertical-align:middle;}
+.td-avatar{
+  width:32px;height:32px;border-radius:50%;background:#FFD700;color:#1a1a1a;
+  font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.td-name{font-weight:600;font-size:13px;}
+.td-sub{font-size:11px;color:#888;}
+.status-badge{
+  display:inline-block;padding:3px 10px;border-radius:20px;
+  font-size:10px;font-weight:700;
+}
+.s-ativo{background:#e8f5e9;color:#2e7d32;}
+.s-pendente{background:#fff8e1;color:#f57f17;}
+.s-inativo{background:#f5f5f5;color:#888;}
+.btn-aprovar{
+  background:#e8f5e9;color:#25a244;border:none;border-radius:8px;
+  padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;
+  font-family:'Poppins',sans-serif;margin-right:4px;
+}
+.btn-rejeitar{
+  background:#ffecec;color:#e63946;border:none;border-radius:8px;
+  padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;
+  font-family:'Poppins',sans-serif;
+}
+
+/* RECEITA */
+.receita-section{margin-bottom:24px;}
+.receita-section h2{font-size:16px;font-weight:700;margin-bottom:14px;}
+.receita-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.receita-card{
+  background:#fff;border-radius:16px;padding:18px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.07);
+  border-left:4px solid;
+}
+.rc-free{border-color:#ccc;}
+.rc-pro{border-color:#0077b6;}
+.rc-premium{border-color:#FFD700;}
+.rc-label{font-size:12px;font-weight:600;color:#888;margin-bottom:4px;}
+.rc-users{font-size:22px;font-weight:800;}
+.rc-price{font-size:13px;color:#888;margin-bottom:8px;}
+.rc-receita{font-size:16px;font-weight:800;color:#25a244;}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{width:60px;}
+  .sidebar-logo .logo-text,.sidebar-link span,.nav-group-label,.sidebar-badge,.sidebar-user-info{display:none;}
+  .main{margin-left:60px;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  .charts-row,.tables-row,.receita-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🤝</span>
+    <span class="logo-text">TÁ<span>NA</span>MÃO</span>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Principal</div>
+    <a href="admin.html" class="sidebar-link active"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
+    <a href="admin-profissionais.html" class="sidebar-link"><i class="fas fa-users"></i><span>Profissionais</span><span class="sidebar-badge">5</span></a>
+    <a href="admin-pendentes.html" class="sidebar-link"><i class="fas fa-user-clock"></i><span>Aprovações</span><span class="sidebar-badge">12</span></a>
+
+    <div class="nav-group-label">Financeiro</div>
+    <a href="admin-planos.html" class="sidebar-link"><i class="fas fa-crown"></i><span>Planos</span></a>
+    <a href="admin-receita.html" class="sidebar-link"><i class="fas fa-dollar-sign"></i><span>Receita</span></a>
+    <a href="admin-pagamentos.html" class="sidebar-link"><i class="fas fa-credit-card"></i><span>Pagamentos</span></a>
+
+    <div class="nav-group-label">Conteúdo</div>
+    <a href="admin-utilidade.html" class="sidebar-link"><i class="fas fa-phone-alt"></i><span>Utilidade Pública</span></a>
+    <a href="admin-denuncias.html" class="sidebar-link"><i class="fas fa-flag"></i><span>Denúncias</span><span class="sidebar-badge">3</span></a>
+    <a href="admin-categorias.html" class="sidebar-link"><i class="fas fa-tags"></i><span>Categorias</span></a>
+
+    <div class="nav-group-label">Sistema</div>
+    <a href="admin-config.html" class="sidebar-link"><i class="fas fa-cog"></i><span>Configurações</span></a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">AD</div>
+      <div class="sidebar-user-info">
+        <div class="name">Admin</div>
+        <div class="role">Administrador</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <h1>Dashboard</h1>
+    <div class="topbar-right">
+      <div class="topbar-notif">
+        <i class="fas fa-bell" style="color:#888;font-size:16px;"></i>
+        <div class="notif-dot"></div>
+      </div>
+      <div style="font-size:12px;color:#888;">Abril 2026</div>
+      <div class="topbar-avatar">AD</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-title">Olá, Admin 👋</div>
+    <p class="page-sub">Aqui está o resumo do TÁNAMÃO hoje.</p>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon-box" style="background:#fffde7;"><i class="fas fa-users" style="color:#e6b800;"></i></div>
+          <span class="kpi-delta-pill delta-green">▲ +14%</span>
+        </div>
+        <div class="kpi-value">1.847</div>
+        <div class="kpi-label">Profissionais ativos</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon-box" style="background:#e8f4ff;"><i class="fas fa-eye" style="color:#0077b6;"></i></div>
+          <span class="kpi-delta-pill delta-green">▲ +22%</span>
+        </div>
+        <div class="kpi-value">38.4k</div>
+        <div class="kpi-label">Visitas este mês</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon-box" style="background:#e8f5e9;"><i class="fas fa-dollar-sign" style="color:#25a244;"></i></div>
+          <span class="kpi-delta-pill delta-green">▲ +31%</span>
+        </div>
+        <div class="kpi-value">R$12.4k</div>
+        <div class="kpi-label">Receita este mês</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon-box" style="background:#ffecec;"><i class="fas fa-user-clock" style="color:#e63946;"></i></div>
+          <span class="kpi-delta-pill delta-red">12 pendentes</span>
+        </div>
+        <div class="kpi-value">12</div>
+        <div class="kpi-label">Aguardando aprovação</div>
+      </div>
+    </div>
+
+    <!-- GRÁFICOS -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <h3>📈 Novos cadastros nos últimos 30 dias</h3>
+        <div class="chart-wrap"><canvas id="cadastrosChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>🥧 Distribuição por Plano</h3>
+        <div class="chart-wrap"><canvas id="planosChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- RECEITA POR PLANO -->
+    <div class="receita-section">
+      <h2>💰 Receita por Plano (Abril/2026)</h2>
+      <div class="receita-grid">
+        <div class="receita-card rc-free">
+          <div class="rc-label">Plano Free</div>
+          <div class="rc-users">1.204 usuários</div>
+          <div class="rc-price">R$ 0,00/mês</div>
+          <div class="rc-receita">R$ 0,00</div>
+        </div>
+        <div class="receita-card rc-pro">
+          <div class="rc-label">Plano Pró</div>
+          <div class="rc-users">498 usuários</div>
+          <div class="rc-price">R$ 29,90/mês</div>
+          <div class="rc-receita">R$ 14.900,20</div>
+        </div>
+        <div class="receita-card rc-premium">
+          <div class="rc-label">Plano Premium</div>
+          <div class="rc-users">145 usuários</div>
+          <div class="rc-price">R$ 79,90/mês</div>
+          <div class="rc-receita">R$ 11.585,50</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELAS -->
+    <div class="tables-row">
+
+      <div class="table-card">
+        <div class="table-card-header">
+          <h3>⏳ Aprovações Pendentes</h3>
+          <button class="btn-ver-todos">Ver todos (12)</button>
+        </div>
+        <table>
+          <thead><tr><th>Profissional</th><th>Categoria</th><th>Ação</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="td-avatar">CS</div>
+                  <div><div class="td-name">Carlos S.</div><div class="td-sub">há 2h</div></div>
+                </div>
+              </td>
+              <td><span class="status-badge s-pendente">Elétrica</span></td>
+              <td>
+                <button class="btn-aprovar">✓</button>
+                <button class="btn-rejeitar">✕</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="td-avatar">PF</div>
+                  <div><div class="td-name">Paula F.</div><div class="td-sub">há 4h</div></div>
+                </div>
+              </td>
+              <td><span class="status-badge s-pendente">Beleza</span></td>
+              <td>
+                <button class="btn-aprovar">✓</button>
+                <button class="btn-rejeitar">✕</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="td-avatar">RM</div>
+                  <div><div class="td-name">Ricardo M.</div><div class="td-sub">há 6h</div></div>
+                </div>
+              </td>
+              <td><span class="status-badge s-pendente">Hidráulica</span></td>
+              <td>
+                <button class="btn-aprovar">✓</button>
+                <button class="btn-rejeitar">✕</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-card-header">
+          <h3>🏆 Top Profissionais (mês)</h3>
+          <button class="btn-ver-todos">Ver ranking</button>
+        </div>
+        <table>
+          <thead><tr><th>#</th><th>Profissional</th><th>Contatos</th><th>Plano</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:800;color:#FFD700;">1</td>
+              <td><div class="td-name">Maria A.</div><div class="td-sub">Beleza</div></td>
+              <td style="font-weight:700;color:#0077b6;">87</td>
+              <td><span class="status-badge" style="background:#fffde7;color:#e6b800;">Premium</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:800;color:#aaa;">2</td>
+              <td><div class="td-name">João E.</div><div class="td-sub">Elétrica</div></td>
+              <td style="font-weight:700;color:#0077b6;">71</td>
+              <td><span class="status-badge" style="background:#e8f4ff;color:#0077b6;">Pró</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:800;color:#c87533;">3</td>
+              <td><div class="td-name">Ana L.</div><div class="td-sub">Saúde</div></td>
+              <td style="font-weight:700;color:#0077b6;">63</td>
+              <td><span class="status-badge" style="background:#fffde7;color:#e6b800;">Premium</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:800;color:#ccc;">4</td>
+              <td><div class="td-name">Pedro R.</div><div class="td-sub">Reforma</div></td>
+              <td style="font-weight:700;color:#0077b6;">58</td>
+              <td><span class="status-badge" style="background:#e8f4ff;color:#0077b6;">Pró</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+// Cadastros chart
+const c1 = document.getElementById('cadastrosChart').getContext('2d');
+const days = Array.from({length:30},(_,i)=>{const d=new Date(2026,3,1);d.setDate(d.getDate()+i);return d.getDate()+'/'+(d.getMonth()+1);});
+const cadastros = [8,12,6,15,9,11,18,7,14,22,10,13,17,8,20,25,11,16,19,12,28,22,15,18,24,31,20,17,26,34];
+new Chart(c1,{
+  type:'bar',
+  data:{labels:days,datasets:[{data:cadastros,backgroundColor:'#FFD700',borderRadius:4}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:8},maxTicksLimit:8,color:'#aaa'}},
+            y:{grid:{color:'#f5f5f5'},ticks:{font:{size:9},color:'#aaa'}}}}
+});
+
+// Planos pie
+const c2 = document.getElementById('planosChart').getContext('2d');
+new Chart(c2,{
+  type:'doughnut',
+  data:{
+    labels:['Free','Pró','Premium'],
+    datasets:[{data:[1204,498,145],backgroundColor:['#e0e0e0','#0077b6','#FFD700'],borderWidth:0}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+    plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12}}}}
+});
+</script>
+</body>
+</html>

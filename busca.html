@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Buscar – TÁNAMÃO</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+.busca-header { background: #FFD700; padding: 12px 16px; position: sticky; top: 0; z-index: 100; }
+.busca-header .search-bar { border-radius: 12px; margin-bottom: 10px; }
+.filter-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.filter-chips::-webkit-scrollbar { display: none; }
+.chip {
+  white-space: nowrap; background: #fff; border: 2px solid #eee;
+  border-radius: 20px; padding: 5px 14px; font-size: 12px;
+  font-weight: 600; color: #555; cursor: pointer;
+  font-family: 'Poppins',sans-serif;
+}
+.chip.active { background: #1a1a1a; color: #FFD700; border-color: #1a1a1a; }
+.results-count { padding: 12px 16px 4px; font-size: 12px; color: #888; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="busca-header">
+  <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Buscar serviço ou profissional..."/>
+    <button class="btn-search">Buscar</button>
+  </div>
+  <div class="filter-chips">
+    <button class="chip active">Todos</button>
+    <button class="chip">Elétrica</button>
+    <button class="chip">Beleza</button>
+    <button class="chip">Reforma</button>
+    <button class="chip">Saúde</button>
+    <button class="chip">Aulas</button>
+    <button class="chip">Informática</button>
+  </div>
+</div>
+<div class="results-count">23 profissionais encontrados em Pederneiras-SP</div>
+<div class="section">
+  <div class="cards-list">
+    <a href="perfil.html" class="card">
+      <div class="card-cover" style="background:#333"></div>
+      <div class="card-avatar">MA</div>
+      <div class="card-info">
+        <div class="card-header-row"><h3>Maria Andrade</h3><span class="badge badge-premium">Premium</span></div>
+        <p class="card-role">Cabeleireira & Designer de Sobrancelhas</p>
+        <div class="card-stars">★★★★★ <span>(38)</span></div>
+        <div class="card-location"><i class="fas fa-map-marker-alt"></i> 1,2 km de você</div>
+        <div class="card-contacts">
+          <a href="#" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </a>
+    <a href="perfil.html" class="card">
+      <div class="card-cover" style="background:#2a2a2a"></div>
+      <div class="card-avatar">RC</div>
+      <div class="card-info">
+        <div class="card-header-row"><h3>Roberto Construções</h3><span class="badge badge-pro">Pró</span></div>
+        <p class="card-role">Pedreiro e Reformas em Geral</p>
+        <div class="card-stars">★★★★☆ <span>(21)</span></div>
+        <div class="card-location"><i class="fas fa-map-marker-alt"></i> 2,5 km de você</div>
+        <div class="card-contacts">
+          <a href="#" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </a>
+    <a href="perfil.html" class="card">
+      <div class="card-cover" style="background:#1e1e1e"></div>
+      <div class="card-avatar">LS</div>
+      <div class="card-info">
+        <div class="card-header-row"><h3>Luciana Silva</h3><span class="badge badge-free">Free</span></div>
+        <p class="card-role">Nutricionista Clínica</p>
+        <div class="card-location"><i class="fas fa-map-marker-alt"></i> 3,8 km de você</div>
+        <div class="card-contacts">
+          <a href="#" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a>
+  <a href="busca.html" class="nav-item active"><i class="fas fa-search"></i><span>Buscar</span></a>
+  <a href="cadastro.html" class="nav-item nav-center"><i class="fas fa-plus"></i></a>
+  <a href="utilidade.html" class="nav-item"><i class="fas fa-phone-alt"></i><span>Utilidade</span></a>
+  <a href="minha-conta.html" class="nav-item"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+</body>
+</html>

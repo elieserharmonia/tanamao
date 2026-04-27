@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Editar Perfil – TÁNAMÃO</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+.ep-header {
+  background: #FFD700; padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.ep-header-left { display: flex; align-items: center; gap: 12px; }
+.ep-header h1 { font-size: 17px; font-weight: 800; color: #1a1a1a; }
+.btn-salvar {
+  background: #1a1a1a; color: #FFD700;
+  border: none; border-radius: 10px; padding: 8px 18px;
+  font-family: 'Poppins',sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer;
+}
+
+/* COVER EDIT */
+.cover-edit-area {
+  height: 160px; background: linear-gradient(135deg,#333,#555);
+  position: relative; display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.cover-edit-btn {
+  background: rgba(0,0,0,0.5); color: #fff;
+  border: 2px dashed #fff; border-radius: 12px; padding: 10px 20px;
+  font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;
+  backdrop-filter: blur(4px);
+}
+.avatar-edit-wrap {
+  display: flex; justify-content: center; margin-top: -36px; margin-bottom: 8px;
+  position: relative;
+}
+.avatar-edit {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #FFD700; color: #1a1a1a;
+  font-size: 24px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  border: 4px solid #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  cursor: pointer; position: relative;
+}
+.avatar-edit-overlay {
+  position: absolute; bottom: 0; right: 0;
+  background: #FFD700; border-radius: 50%; width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; border: 2px solid #fff;
+}
+.required-badge {
+  background: #e63946; color: #fff;
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 20px; margin-left: 6px;
+}
+.avatar-note { text-align: center; font-size: 11px; color: #888; margin-bottom: 16px; }
+
+/* FORM */
+.form-section { padding: 0 16px 16px; background: #fff; margin-top: 8px; }
+.form-section h3 { font-size: 13px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; padding: 14px 0 10px; border-bottom: 1px solid #f0f0f0; margin-bottom: 14px; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 5px; color: #333; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; border: 2px solid #eee; border-radius: 10px;
+  padding: 11px 14px; font-family: 'Poppins',sans-serif; font-size: 13px;
+  outline: none; transition: border 0.2s; color: #1a1a1a; background: #fafafa;
+}
+.form-group input:focus, .form-group textarea:focus { border-color: #FFD700; background: #fff; }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.char-count { text-align: right; font-size: 10px; color: #bbb; margin-top: 3px; }
+
+.input-icon-wrap { position: relative; }
+.input-icon-wrap .input-icon {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 15px; color: #bbb; pointer-events: none;
+}
+.input-icon-wrap input { padding-left: 38px; }
+
+/* SOCIAL GRID */
+.social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.btn-salvar-bottom {
+  width: 100%; background: #FFD700; color: #1a1a1a;
+  border: none; border-radius: 14px; padding: 16px;
+  font-family: 'Poppins',sans-serif; font-size: 16px; font-weight: 800;
+  cursor: pointer; margin-top: 8px;
+  box-shadow: 0 4px 14px rgba(255,215,0,0.4);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-excluir-conta {
+  width: 100%; background: transparent; color: #e63946;
+  border: none; font-family: 'Poppins',sans-serif; font-size: 13px;
+  cursor: pointer; padding: 12px; text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<div class="ep-header">
+  <div class="ep-header-left">
+    <a href="minha-conta.html" style="color:#1a1a1a;font-size:18px;"><i class="fas fa-arrow-left"></i></a>
+    <h1>Editar Perfil</h1>
+  </div>
+  <button class="btn-salvar">Salvar</button>
+</div>
+
+<!-- COVER -->
+<div class="cover-edit-area">
+  <div class="cover-edit-btn"><i class="fas fa-camera"></i> Alterar foto de capa</div>
+</div>
+
+<!-- AVATAR -->
+<div style="background:#fff; padding-bottom:4px;">
+  <div class="avatar-edit-wrap">
+    <div class="avatar-edit">
+      MA
+      <div class="avatar-edit-overlay"><i class="fas fa-camera"></i></div>
+    </div>
+  </div>
+  <p class="avatar-note">
+    <i class="fas fa-shield-alt" style="color:#e63946"></i>
+    Foto do rosto obrigatória <span class="required-badge">Obrigatório</span><br>
+    Necessária para segurança e verificação de identidade
+  </p>
+</div>
+
+<!-- DADOS BÁSICOS -->
+<div class="form-section">
+  <h3>Dados Básicos</h3>
+
+  <div class="form-group">
+    <label>Nome completo / Nome do negócio</label>
+    <input type="text" value="Maria Andrade"/>
+  </div>
+
+  <div class="form-group">
+    <label>Categoria principal</label>
+    <select>
+      <option selected>Beleza</option>
+      <option>Elétrica</option><option>Hidráulica</option>
+      <option>Saúde</option><option>Reforma</option>
+      <option>Aulas</option><option>Informática</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Bio / Descrição dos serviços</label>
+    <textarea id="bioField" oninput="updateCount(this,'bioCount',300)">Olá! Sou Maria, profissional de beleza com mais de 8 anos de experiência. Especializada em cortes femininos, colorações, escova progressiva e design de sobrancelhas. Atendo em estúdio próprio em Pederneiras-SP. Agende pelo WhatsApp! 💛</textarea>
+    <div class="char-count"><span id="bioCount">218</span>/300 caracteres</div>
+  </div>
+
+  <div class="form-group">
+    <label>Cidade / Região de atendimento</label>
+    <div class="input-icon-wrap">
+      <i class="fas fa-map-marker-alt input-icon" style="color:#e63946"></i>
+      <input type="text" value="Pederneiras – SP"/>
+    </div>
+  </div>
+</div>
+
+<!-- CONTATOS -->
+<div class="form-section" style="margin-top:8px;">
+  <h3>Contatos</h3>
+
+  <div class="form-group">
+    <label><i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp <span style="color:#e63946;font-size:11px;">*</span></label>
+    <div class="input-icon-wrap">
+      <i class="fab fa-whatsapp input-icon" style="color:#25D366"></i>
+      <input type="tel" value="(14) 99999-0000"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label><i class="fas fa-phone" style="color:#0077b6"></i> Telefone</label>
+    <div class="input-icon-wrap">
+      <i class="fas fa-phone input-icon" style="color:#0077b6"></i>
+      <input type="tel" value="(14) 3282-0000"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label><i class="fas fa-envelope" style="color:#e63946"></i> E-mail</label>
+    <div class="input-icon-wrap">
+      <i class="fas fa-envelope input-icon" style="color:#e63946"></i>
+      <input type="email" value="maria@email.com"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Endereço</label>
+    <input type="text" value="Rua das Flores, 123 – Centro"/>
+  </div>
+</div>
+
+<!-- REDES SOCIAIS -->
+<div class="form-section" style="margin-top:8px;">
+  <h3>Redes Sociais</h3>
+  <div class="social-grid">
+    <div class="form-group">
+      <label><i class="fab fa-instagram" style="color:#bc1888"></i> Instagram</label>
+      <input type="text" value="@mariabeleza"/>
+    </div>
+    <div class="form-group">
+      <label><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook</label>
+      <input type="text" value="/mariabeleza"/>
+    </div>
+    <div class="form-group">
+      <label><i class="fab fa-linkedin" style="color:#0a66c2"></i> LinkedIn</label>
+      <input type="text" placeholder="seu-perfil"/>
+    </div>
+    <div class="form-group">
+      <label><i class="fab fa-tiktok" style="color:#1a1a1a"></i> TikTok</label>
+      <input type="text" placeholder="@seu_tiktok"/>
+    </div>
+  </div>
+</div>
+
+<!-- AÇÕES -->
+<div style="padding:16px 16px 100px;">
+  <button class="btn-salvar-bottom"><i class="fas fa-check"></i> Salvar Alterações</button>
+  <button class="btn-excluir-conta">Excluir minha conta</button>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a>
+  <a href="busca.html" class="nav-item"><i class="fas fa-search"></i><span>Buscar</span></a>
+  <a href="cadastro.html" class="nav-item nav-center"><i class="fas fa-plus"></i></a>
+  <a href="utilidade.html" class="nav-item"><i class="fas fa-phone-alt"></i><span>Utilidade</span></a>
+  <a href="minha-conta.html" class="nav-item active"><i class="fas fa-user"></i><span>Perfil</span></a>
+</nav>
+
+<script>
+function updateCount(el, countId, max) {
+  document.getElementById(countId).textContent = el.value.length;
+}
+</script>
+</body>
+</html>

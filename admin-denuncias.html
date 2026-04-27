@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Denúncias e Moderação – Admin TÁNAMÃO</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:#f0f2f5;color:#1a1a1a;display:flex;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+
+/* SIDEBAR */
+.sidebar{width:240px;background:#1a1a1a;min-height:100vh;display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;}
+.sidebar-logo{padding:20px 18px;border-bottom:1px solid #333;display:flex;align-items:center;gap:10px;}
+.sidebar-logo .logo-text{font-size:20px;font-weight:800;color:#FFD700;}
+.sidebar-logo .logo-text span{color:#e65c00;}
+.sidebar-nav{flex:1;padding:16px 0;}
+.nav-group-label{font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:0.8px;padding:10px 18px 4px;}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:11px 18px;font-size:13px;font-weight:600;color:#aaa;transition:all 0.2s;cursor:pointer;}
+.sidebar-link:hover,.sidebar-link.active{background:#2a2a2a;color:#FFD700;}
+.sidebar-link i{width:18px;text-align:center;font-size:15px;}
+.sidebar-badge{margin-left:auto;background:#e63946;color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 7px;}
+.sidebar-footer{padding:16px 18px;border-top:1px solid #333;}
+.sidebar-avatar{width:36px;height:36px;border-radius:50%;background:#FFD700;color:#1a1a1a;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+
+/* MAIN */
+.main{margin-left:240px;flex:1;}
+.topbar{background:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;position:sticky;top:0;z-index:50;}
+.topbar h1{font-size:18px;font-weight:800;}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.topbar-avatar{width:38px;height:38px;border-radius:50%;background:#FFD700;color:#1a1a1a;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+
+.content{padding:24px;}
+.page-title{font-size:22px;font-weight:800;margin-bottom:4px;}
+.page-sub{font-size:13px;color:#888;margin-bottom:20px;}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);display:flex;gap:14px;align-items:center;}
+.stat-icon-box{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.stat-value{font-size:24px;font-weight:800;}
+.stat-label{font-size:11px;color:#888;font-weight:600;}
+
+/* FILTERS */
+.filters-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+.filter-select{
+  border:2px solid #eee;border-radius:10px;padding:8px 14px;
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;outline:none;
+  background:#fff;cursor:pointer;color:#333;
+}
+.filter-select:focus{border-color:#FFD700;}
+.search-input{
+  flex:1;min-width:200px;border:2px solid #eee;border-radius:10px;
+  padding:8px 14px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;
+}
+.search-input:focus{border-color:#FFD700;}
+.btn-filter{
+  background:#FFD700;border:none;border-radius:10px;padding:8px 18px;
+  font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;
+}
+
+/* DENÚNCIAS TABLE */
+.denuncias-table{background:#fff;border-radius:16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);overflow:hidden;margin-bottom:24px;}
+.dt-header{padding:16px 20px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;}
+.dt-header h3{font-size:15px;font-weight:700;}
+.dt-count{font-size:13px;color:#888;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:0.5px;padding:12px 16px;text-align:left;border-bottom:2px solid #f5f5f5;}
+td{font-size:13px;padding:14px 16px;border-bottom:1px solid #f5f5f5;vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#fafafa;}
+
+.accused-wrap{display:flex;align-items:center;gap:10px;}
+.accused-avatar{width:36px;height:36px;border-radius:50%;background:#FFD700;color:#1a1a1a;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.accused-name{font-weight:700;font-size:13px;}
+.accused-cat{font-size:11px;color:#888;}
+
+.motivo-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.m-fraude{background:#ffecec;color:#e63946;}
+.m-spam{background:#fff3e0;color:#f57f17;}
+.m-foto{background:#f3e5f5;color:#7b1fa2;}
+.m-golpe{background:#fce4ec;color:#c62828;}
+.m-outro{background:#f5f5f5;color:#666;}
+
+.severity-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px;}
+.sev-alta{background:#e63946;}
+.sev-media{background:#f57f17;}
+.sev-baixa{background:#25a244;}
+
+.actions-cell{display:flex;gap:6px;flex-wrap:wrap;}
+.btn-action{border:none;border-radius:8px;padding:6px 12px;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;}
+.btn-ver{background:#e8f4ff;color:#0077b6;}
+.btn-suspender{background:#fff3e0;color:#e65c00;}
+.btn-banir{background:#ffecec;color:#e63946;}
+.btn-ignorar{background:#f5f5f5;color:#888;}
+.btn-resolver{background:#e8f5e9;color:#25a244;}
+
+.reporter-info{font-size:12px;color:#555;}
+.reporter-date{font-size:11px;color:#bbb;margin-top:2px;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:20px;padding:24px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.modal-header h2{font-size:18px;font-weight:800;}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:#888;}
+.modal-section{margin-bottom:16px;}
+.modal-section h4{font-size:12px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+.modal-section p{font-size:13px;color:#444;line-height:1.6;}
+.profile-preview{display:flex;align-items:center;gap:14px;background:#f9f9f9;border-radius:12px;padding:14px;margin-bottom:14px;}
+.preview-avatar{width:52px;height:52px;border-radius:50%;background:#FFD700;color:#1a1a1a;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.btn-modal{flex:1;border:none;border-radius:12px;padding:12px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;min-width:120px;}
+.btn-m-ignorar{background:#f0f0f0;color:#888;}
+.btn-m-suspender{background:#fff3e0;color:#e65c00;}
+.btn-m-banir{background:#e63946;color:#fff;}
+.btn-m-resolver{background:#25a244;color:#fff;}
+.textarea-obs{
+  width:100%;border:2px solid #eee;border-radius:10px;padding:10px 14px;
+  font-family:'Poppins',sans-serif;font-size:13px;outline:none;
+  resize:vertical;min-height:70px;margin-top:8px;
+}
+.textarea-obs:focus{border-color:#FFD700;}
+
+/* HISTÓRICO */
+.historico-section{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,0.07);}
+.historico-section h3{font-size:15px;font-weight:700;margin-bottom:14px;}
+.hist-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #f5f5f5;}
+.hist-item:last-child{border:none;}
+.hist-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.hist-body p{font-size:13px;color:#333;margin-bottom:2px;}
+.hist-body span{font-size:11px;color:#aaa;}
+
+@media(max-width:900px){
+  .sidebar{width:60px;}
+  .sidebar-logo .logo-text,.sidebar-link span,.nav-group-label,.sidebar-badge,.sidebar-footer{display:none;}
+  .main{margin-left:60px;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  table{font-size:11px;}
+  th,td{padding:10px 10px;}
+  .actions-cell{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span style="font-size:24px;">🤝</span>
+    <span class="logo-text">TÁ<span>NA</span>MÃO</span>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Principal</div>
+    <a href="admin.html" class="sidebar-link"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
+    <a href="#" class="sidebar-link"><i class="fas fa-users"></i><span>Profissionais</span></a>
+    <a href="#" class="sidebar-link"><i class="fas fa-user-clock"></i><span>Aprovações</span><span class="sidebar-badge">12</span></a>
+    <div class="nav-group-label">Financeiro</div>
+    <a href="#" class="sidebar-link"><i class="fas fa-crown"></i><span>Planos</span></a>
+    <a href="#" class="sidebar-link"><i class="fas fa-dollar-sign"></i><span>Receita</span></a>
+    <div class="nav-group-label">Conteúdo</div>
+    <a href="#" class="sidebar-link"><i class="fas fa-phone-alt"></i><span>Utilidade Pública</span></a>
+    <a href="admin-denuncias.html" class="sidebar-link active"><i class="fas fa-flag"></i><span>Denúncias</span><span class="sidebar-badge">3</span></a>
+    <a href="#" class="sidebar-link"><i class="fas fa-tags"></i><span>Categorias</span></a>
+    <div class="nav-group-label">Sistema</div>
+    <a href="#" class="sidebar-link"><i class="fas fa-cog"></i><span>Configurações</span></a>
+  </div>
+  <div class="sidebar-footer">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="sidebar-avatar">AD</div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <h1>Denúncias e Moderação</h1>
+    <div class="topbar-right">
+      <div style="font-size:12px;color:#888;">Abril 2026</div>
+      <div class="topbar-avatar">AD</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-title">Central de Moderação</div>
+    <p class="page-sub">Gerencie denúncias, suspensões e banimentos de perfis.</p>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon-box" style="background:#ffecec;"><i class="fas fa-flag" style="color:#e63946;"></i></div>
+        <div><div class="stat-value">18</div><div class="stat-label">Denúncias abertas</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-box" style="background:#fff3e0;"><i class="fas fa-user-slash" style="color:#e65c00;"></i></div>
+        <div><div class="stat-value">5</div><div class="stat-label">Perfis suspensos</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-box" style="background:#fce4ec;"><i class="fas fa-ban" style="color:#c62828;"></i></div>
+        <div><div class="stat-value">2</div><div class="stat-label">Banimentos este mês</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-box" style="background:#e8f5e9;"><i class="fas fa-check-circle" style="color:#25a244;"></i></div>
+        <div><div class="stat-value">43</div><div class="stat-label">Resolvidas no mês</div></div>
+      </div>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filters-bar">
+      <select class="filter-select" onchange="filtrarDenuncias(this.value)">
+        <option value="todas">Todas as denúncias</option>
+        <option value="abertas">Em aberto</option>
+        <option value="em-analise">Em análise</option>
+        <option value="resolvidas">Resolvidas</option>
+      </select>
+      <select class="filter-select">
+        <option>Todos os motivos</option>
+        <option>Fraude / Golpe</option>
+        <option>Foto falsa</option>
+        <option>Spam</option>
+        <option>Perfil duplicado</option>
+      </select>
+      <select class="filter-select">
+        <option>Todas as severidades</option>
+        <option>Alta</option>
+        <option>Média</option>
+        <option>Baixa</option>
+      </select>
+      <input class="search-input" type="text" placeholder="🔍 Buscar por nome ou ID..."/>
+      <button class="btn-filter">Filtrar</button>
+    </div>
+
+    <!-- TABELA -->
+    <div class="denuncias-table">
+      <div class="dt-header">
+        <h3>📋 Denúncias recebidas</h3>
+        <span class="dt-count">18 registros</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Severidade</th>
+            <th>Perfil Denunciado</th>
+            <th>Motivo</th>
+            <th>Denunciante</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyDenuncias">
+
+          <tr>
+            <td><span class="severity-dot sev-alta"></span><strong style="color:#e63946;">Alta</strong></td>
+            <td>
+              <div class="accused-wrap">
+                <div class="accused-avatar">JP</div>
+                <div><div class="accused-name">João Pedro S.</div><div class="accused-cat">Elétrica • Pederneiras</div></div>
+              </div>
+            </td>
+            <td><span class="motivo-badge m-golpe">Suspeita de golpe</span></td>
+            <td>
+              <div class="reporter-info">Ana Lima (cliente)</div>
+              <div class="reporter-date">há 2 horas</div>
+            </td>
+            <td><span class="motivo-badge" style="background:#fff8e1;color:#f57f17;">Em análise</span></td>
+            <td>
+              <div class="actions-cell">
+                <button class="btn-action btn-ver" onclick="abrirModal('João Pedro S.','Elétrica','Suspeita de golpe — cliente relata cobrança antecipada sem prestação de serviço. 3ª denúncia recebida em 30 dias.')">
+                  <i class="fas fa-eye"></i> Ver
+                </button>
+                <button class="btn-action btn-banir" onclick="confirmarAcao('banir','João Pedro S.')">
+                  <i class="fas fa-ban"></i> Banir
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><span class="severity-dot sev-alta"></span><strong style="color:#e63946;">Alta</strong></td>
+            <td>
+              <div class="accused-wrap">
+                <div class="accused-avatar">MC</div>
+                <div><div class="accused-name">Marcia Costa</div><div class="accused-cat">Beleza • Pederneiras</div></div>
+              </div>
+            </td>
+            <td><span class="motivo-badge m-foto">Foto falsa</span></td>
+            <td>
+              <div class="reporter-info">Sistema automático</div>
+              <div class="reporter-date">há 5 horas</div>
+            </td>
+            <td><span class="motivo-badge" style="background:#ffecec;color:#e63946;">Aberta</span></td>
+            <td>
+              <div class="actions-cell">
+                <button class="btn-action btn-ver" onclick="abrirModal('Marcia Costa','Beleza','Foto de perfil identificada como imagem de banco de dados (não é foto real). IA flagou similaridade de 94% com imagem stock.')">
+                  <i class="fas fa-eye"></i> Ver
+                </button>
+                <button class="btn-action btn-suspender" onclick="confirmarAcao('suspender','Marcia Costa')">
+                  <i class="fas fa-user-slash"></i> Suspender
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><span class="severity-dot sev-media"></span><strong style="color:#f57f17;">Média</strong></td>
+            <td>
+              <div class="accused-wrap">
+                <div class="accused-avatar">RL</div>
+                <div><div class="accused-name">Roberto Lima</div><div class="accused-cat">Reforma • Pederneiras</div></div>
+              </div>
+            </td>
+            <td><span class="motivo-badge m-spam">Spam / contato abusivo</span></td>
+            <td>
+              <div class="reporter-info">Carla Souza (cliente)</div>
+              <div class="reporter-date">há 1 dia</div>
+            </td>
+            <td><span class="motivo-badge" style="background:#ffecec;color:#e63946;">Aberta</span></td>
+            <td>
+              <div class="actions-cell">
+                <button class="btn-action btn-ver" onclick="abrirModal('Roberto Lima','Reforma','Cliente relata mensagens repetitivas e insistentes via WhatsApp após negar contratação.')">
+                  <i class="fas fa-eye"></i> Ver
+                </button>
+                <button class="btn-action btn-suspender">
+                  <i class="fas fa-user-slash"></i> Suspender
+                </button>
+                <button class="btn-action btn-ignorar" onclick="resolverDenuncia(this)">
+                  <i class="fas fa-times"></i> Ignorar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><span class="severity-dot sev-media"></span><strong style="color:#f57f17;">Média</strong></td>
+            <td>
+              <div class="accused-wrap">
+                <div class="accused-avatar">FS</div>
+                <div><div class="accused-name">Fernanda Silva</div><div class="accused-cat">Saúde • Pederneiras</div></div>
+              </div>
+            </td>
+            <td><span class="motivo-badge m-fraude">Serviço não realizado</span></td>
+            <td>
+              <div class="reporter-info">Marcos Pinto (cliente)</div>
+              <div class="reporter-date">há 2 dias</div>
+            </td>
+            <td><span class="motivo-badge" style="background:#fff8e1;color:#f57f17;">Em análise</span></td>
+            <td>
+              <div class="actions-cell">
+                <button class="btn-action btn-ver" onclick="abrirModal('Fernanda Silva','Saúde','Cliente relata que pagou R$150 pelo serviço mas profissional não compareceu e não devolveu o pagamento.')">
+                  <i class="fas fa-eye"></i> Ver
+                </button>
+                <button class="btn-action btn-resolver" onclick="resolverDenuncia(this)">
+                  <i class="fas fa-check"></i> Resolver
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><span class="severity-dot sev-baixa"></span><strong style="color:#25a244;">Baixa</strong></td>
+            <td>
+              <div class="accused-wrap">
+                <div class="accused-avatar">TM</div>
+                <div><div class="accused-name">Tiago Mendes</div><div class="accused-cat">Informática • Pederneiras</div></div>
+              </div>
+            </td>
+            <td><span class="motivo-badge m-outro">Informações incorretas</span></td>
+            <td>
+              <div class="reporter-info">Sandra Costa (cliente)</div>
+              <div class="reporter-date">há 3 dias</div>
+            </td>
+            <td><span class="motivo-badge" style="background:#e8f5e9;color:#2e7d32;">Resolvida</span></td>
+            <td>
+              <div class="actions-cell">
+                <button class="btn-action btn-ver" onclick="abrirModal('Tiago Mendes','Informática','Profissional anunciou atendimento presencial mas só atende remotamente. Perfil já foi atualizado pelo profissional.')">
+                  <i class="fas fa-eye"></i> Ver
+                </button>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- HISTÓRICO DE AÇÕES -->
+    <div class="historico-section">
+      <h3>📜 Histórico de ações recentes</h3>
+      <div class="hist-item">
+        <div class="hist-icon" style="background:#ffecec;"><i class="fas fa-ban" style="color:#e63946;"></i></div>
+        <div class="hist-body">
+          <p><strong>Perfil banido:</strong> Lucas Ferreira (Automotivo) — 3 denúncias de golpe confirmadas</p>
+          <span>Admin • há 2 dias</span>
+        </div>
+      </div>
+      <div class="hist-item">
+        <div class="hist-icon" style="background:#fff3e0;"><i class="fas fa-user-slash" style="color:#e65c00;"></i></div>
+        <div class="hist-body">
+          <p><strong>Perfil suspenso por 7 dias:</strong> Patricia Nunes (Beleza) — foto de perfil não era foto real</p>
+          <span>Admin • há 3 dias</span>
+        </div>
+      </div>
+      <div class="hist-item">
+        <div class="hist-icon" style="background:#e8f5e9;"><i class="fas fa-check" style="color:#25a244;"></i></div>
+        <div class="hist-body">
+          <p><strong>Denúncia resolvida:</strong> Carlos Eduardo (Reforma) — cliente e profissional entraram em acordo</p>
+          <span>Admin • há 4 dias</span>
+        </div>
+      </div>
+      <div class="hist-item">
+        <div class="hist-icon" style="background:#f3e5f5;"><i class="fas fa-camera" style="color:#7b1fa2;"></i></div>
+        <div class="hist-body">
+          <p><strong>Foto substituída:</strong> Renata Oliveira (Aulas) — foto de perfil trocada após notificação</p>
+          <span>Admin • há 5 dias</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- MODAL DE DETALHES -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Detalhes da Denúncia</h2>
+      <button class="modal-close" onclick="fecharModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="profile-preview">
+      <div class="preview-avatar" id="modalAvatar">JP</div>
+      <div>
+        <div style="font-size:16px;font-weight:800;" id="modalName">João Pedro S.</div>
+        <div style="font-size:12px;color:#888;" id="modalCat">Elétrica • Pederneiras</div>
+        <a href="perfil.html" style="font-size:12px;color:#0077b6;font-weight:600;">Ver perfil completo →</a>
+      </div>
+    </div>
+    <div class="modal-section">
+      <h4>Descrição da denúncia</h4>
+      <p id="modalDesc">Descrição aqui.</p>
+    </div>
+    <div class="modal-section">
+      <h4>Observação do moderador</h4>
+      <textarea class="textarea-obs" placeholder="Adicione uma nota interna sobre este caso..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal btn-m-ignorar" onclick="fecharModal()">Ignorar</button>
+      <button class="btn-modal btn-m-suspender" onclick="fecharModal()"><i class="fas fa-user-slash"></i> Suspender</button>
+      <button class="btn-modal btn-m-banir" onclick="fecharModal()"><i class="fas fa-ban"></i> Banir</button>
+      <button class="btn-modal btn-m-resolver" onclick="fecharModal()"><i class="fas fa-check"></i> Resolver</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function abrirModal(nome, cat, desc){
+  document.getElementById('modalName').textContent = nome;
+  document.getElementById('modalCat').textContent = cat + ' • Pederneiras';
+  document.getElementById('modalDesc').textContent = desc;
+  document.getElementById('modalAvatar').textContent = nome.split(' ').map(n=>n[0]).slice(0,2).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function fecharModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+function confirmarAcao(acao, nome){
+  const msg = acao === 'banir'
+    ? `Tem certeza que deseja BANIR permanentemente o perfil de "${nome}"? Esta ação não pode ser desfeita.`
+    : `Deseja SUSPENDER o perfil de "${nome}" temporariamente?`;
+  if(confirm(msg)){
+    alert(`Ação "${acao}" aplicada ao perfil de ${nome} com sucesso.`);
+  }
+}
+function resolverDenuncia(btn){
+  const row = btn.closest('tr');
+  const statusCell = row.querySelectorAll('td')[4];
+  statusCell.innerHTML = '<span class="motivo-badge" style="background:#e8f5e9;color:#2e7d32;">Resolvida</span>';
+}
+function filtrarDenuncias(val){
+  console.log('Filtro:', val);
+}
+document.getElementById('modalOverlay').addEventListener('click', function(e){
+  if(e.target === this) fecharModal();
+});
+</script>
+</body>
+</html>
